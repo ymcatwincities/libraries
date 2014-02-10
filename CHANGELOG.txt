@@ -1,6 +1,7 @@
 
 Libraries 8.x-3.x, xxxx-xx-xx
 -----------------------------
+#2183087 by tstoeckler, rjacobs: Update for removed core functions.
 by tstoeckler: Fix tests.
 by tstoeckler: Provide required 'type' key in test library info file.
 #2090351 by tstoeckler: Remove obsolete hook_flush_caches().

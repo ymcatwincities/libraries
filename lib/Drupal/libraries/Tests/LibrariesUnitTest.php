@@ -7,23 +7,27 @@
 
 namespace Drupal\libraries\Tests;
 
-use \Drupal\simpletest\UnitTestBase;
+use Drupal\simpletest\DrupalUnitTestBase;
 
 /**
  * Tests basic Libraries API functions.
  */
-class LibrariesUnitTest extends UnitTestBase {
+class LibrariesUnitTest extends DrupalUnitTestBase {
+
+  /**
+   * {@inheritdoc}
+   */
+  public static $modules = array('libraries');
+
+  /**
+   * {@inheritdoc}
+   */
   public static function getInfo() {
     return array(
       'name' => 'Libraries API unit tests',
       'description' => 'Tests basic functions provided by Libraries API.',
       'group' => 'Libraries API',
     );
-  }
-
-  function setUp() {
-    drupal_load('module', 'libraries');
-    parent::setUp();
   }
 
   /**

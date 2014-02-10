@@ -458,7 +458,7 @@ function _libraries_test_callback(&$library, $version, $variant, $group) {
   // The following is used to test caching of library information.
   // Only set the message for the top-level library to prevent confusing,
   // duplicate messages.
-  if (!isset($version) && !isset($variant) && variable_get('libraries_test_cache', FALSE)) {
+  if (!isset($version) && !isset($variant) && \Drupal::state()->get('libraries_test.cache', FALSE)) {
     drupal_set_message("The <em>$group</em> callback group was invoked.");
   }
 }

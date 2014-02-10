@@ -396,7 +396,7 @@ class LibrariesWebTest extends WebTestBase {
     $this->assertLibraryFiles('example_4', 'Concurrent version and variant overloading');
 
     // Test caching.
-    variable_set('libraries_test_cache', TRUE);
+    \Drupal::state()->set('libraries_test.cache', TRUE);
     cache('libraries')->delete('example_callback');
     // When the library information is not cached, all callback groups should be
     // invoked.
@@ -414,7 +414,7 @@ class LibrariesWebTest extends WebTestBase {
     $this->assertNoRaw('The <em>post-detect</em> callback group was not invoked.', 'Post-detect callback not invoked for cached libraries.');
     $this->assertRaw('The <em>pre-load</em> callback group was invoked.', 'Pre-load callback invoked for cached libraries.');
     $this->assertRaw('The <em>post-load</em> callback group was invoked.', 'Post-load callback invoked for cached libraries.');
-    variable_set('libraries_test_cache', FALSE);
+    \Drupal::state()->set('libraries_test.cache', FALSE);
   }
 
   /**

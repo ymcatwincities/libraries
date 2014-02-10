@@ -680,7 +680,8 @@ function libraries_load_files($library) {
         if (!isset($options['group'])) {
           $options['group'] = ($type == 'js') ? JS_DEFAULT : CSS_AGGREGATE_DEFAULT;
         }
-        call_user_func('drupal_add_' . $type, $data, $options);
+        // @todo Avoid the usage of _drupal_add_js() and _drupal_add_css()
+        call_user_func('_drupal_add_' . $type, $data, $options);
         $count++;
       }
     }
