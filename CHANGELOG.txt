@@ -1,6 +1,7 @@
 
 Libraries 8.x-3.x, xxxx-xx-xx
 -----------------------------
+#2287529 by drupalshrek, tstoeckler: Update installation link in README.txt
 by tstoeckler: Fix tests.
 #2309203 by JayeshSolanki: Replace removed functions with module handler service.
 #2290767 by yukare: Replace removed cache() function.

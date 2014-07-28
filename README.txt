@@ -16,9 +16,10 @@ Bug reports, feature suggestions and latest developments:
 
 -- INSTALLATION --
 
-* Install as usual, see http://drupal.org/node/70151 for further information.
-  Note that installing external libraries is separate from installing this
-  module and should happen in the /libraries directory. See
+* Install as usual, see
+  https://www.drupal.org/documentation/install/modules-themes/modules-8 for
+  further information. Note that installing external libraries is separate from
+  installing this module and should happen in the /libraries directory. See
   http://drupal.org/node/1440066 for more information.
 
 
