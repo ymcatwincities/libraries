@@ -113,7 +113,7 @@ function libraries_scan_info_files() {
   $config = conf_path();
 
   // Build a list of directories.
-  $directories = module_invoke_all('libraries_info_file_paths');
+  $directories = \Drupal::moduleHandler()->invokeAll('libraries_info_file_paths', $args = array());
   $directories[] = "$profile/libraries";
   $directories[] = 'sites/all/libraries';
   $directories[] = 'libraries';
@@ -324,7 +324,7 @@ function &libraries_info($name = NULL) {
   if (!isset($libraries)) {
     $libraries = array();
     // Gather information from hook_libraries_info().
-    foreach (module_implements('libraries_info') as $module) {
+    foreach (\Drupal::moduleHandler()->getImplementations('libraries_info') as $module) {
       foreach (module_invoke($module, 'libraries_info') as $machine_name => $properties) {
         $properties['module'] = $module;
         $libraries[$machine_name] = $properties;
@@ -374,7 +374,7 @@ function &libraries_info($name = NULL) {
     }
 
     // Allow modules to alter the registered libraries.
-    drupal_alter('libraries_info', $libraries);
+    \Drupal::moduleHandler()->alter('libraries_info', $libraries);
 
     // Invoke callbacks in the 'info' group.
     foreach ($libraries as &$properties) {

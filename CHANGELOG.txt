@@ -1,6 +1,7 @@
 
 Libraries 8.x-3.x, xxxx-xx-xx
 -----------------------------
+#2309203 by JayeshSolanki: Replace removed functions with module handler service.
 #2290767 by yukare: Replace removed cache() function.
 #2183087 by tstoeckler, rjacobs: Update for removed core functions.
 by tstoeckler: Fix tests.
