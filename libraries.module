@@ -590,13 +590,13 @@ function libraries_load($name, $variant = NULL) {
   $loaded = &drupal_static(__FUNCTION__, array());
 
   if (!isset($loaded[$name])) {
-    $library = cache('libraries')->get($name);
+    $library = \Drupal::cache('libraries')->get($name);
     if ($library) {
       $library = $library->data;
     }
     else {
       $library = libraries_detect($name);
-      cache('libraries')->set($name, $library);
+      \Drupal::cache('libraries')->set($name, $library);
     }
     // If a variant was specified, override the top-level properties with the
     // variant properties.
