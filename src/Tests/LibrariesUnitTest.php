@@ -11,6 +11,8 @@ use Drupal\simpletest\DrupalUnitTestBase;
 
 /**
  * Tests basic Libraries API functions.
+ *
+ * @group libraries
  */
 class LibrariesUnitTest extends DrupalUnitTestBase {
 
@@ -18,17 +20,6 @@ class LibrariesUnitTest extends DrupalUnitTestBase {
    * {@inheritdoc}
    */
   public static $modules = array('libraries');
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function getInfo() {
-    return array(
-      'name' => 'Libraries API unit tests',
-      'description' => 'Tests basic functions provided by Libraries API.',
-      'group' => 'Libraries API',
-    );
-  }
 
   /**
    * Tests libraries_get_path().

@@ -7,23 +7,19 @@
 
 namespace Drupal\libraries\Tests;
 
-use \Drupal\simpletest\WebTestBase;
+use Drupal\Component\Utility\String;
+use Drupal\simpletest\WebTestBase;
 
 /**
  * Tests basic detection and loading of libraries.
+ *
+ * @group libraries
  */
 class LibrariesWebTest extends WebTestBase {
+
   protected $profile = 'testing';
 
   static $modules = array('libraries', 'libraries_test');
-
-  public static function getInfo() {
-    return array(
-      'name' => 'Libraries detection and loading',
-      'description' => 'Tests detection and loading of libraries.',
-      'group' => 'Libraries API',
-    );
-  }
 
   /**
    * Tests libraries_detect_dependencies().
@@ -397,7 +393,7 @@ class LibrariesWebTest extends WebTestBase {
 
     // Test caching.
     \Drupal::state()->set('libraries_test.cache', TRUE);
-    cache('libraries')->delete('example_callback');
+    \Drupal::cache('libraries')->delete('example_callback');
     // When the library information is not cached, all callback groups should be
     // invoked.
     $this->drupalGet('libraries_test/cache');
@@ -476,11 +472,11 @@ class LibrariesWebTest extends WebTestBase {
         }
         $raw = $html[$extension][0] . $filepath . $html[$extension][1];
         if ($expected) {
-          $html_expected[] = check_plain($raw);
+          $html_expected[] = String::checkPlain($raw);
           $this->assertRaw($raw, "$label$name.$extension found.");
         }
         else {
-          $html_not_expected[] = check_plain($raw);
+          $html_not_expected[] = String::checkPlain($raw);
           $this->assertNoRaw($raw, "$label$name.$extension not found.");
         }
       }

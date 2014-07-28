@@ -5,6 +5,8 @@
  * Tests the library detection and loading.
  */
 
+use Drupal\Component\Utility\SafeMarkup;
+
 /**
  * Implements hook_libraries_info().
  */
@@ -459,7 +461,7 @@ function _libraries_test_callback(&$library, $version, $variant, $group) {
   // Only set the message for the top-level library to prevent confusing,
   // duplicate messages.
   if (!isset($version) && !isset($variant) && \Drupal::state()->get('libraries_test.cache', FALSE)) {
-    drupal_set_message("The <em>$group</em> callback group was invoked.");
+    drupal_set_message(SafeMarkup::set("The <em>$group</em> callback group was invoked."));
   }
 }
 
