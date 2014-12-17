@@ -1,7 +1,8 @@
 
 Libraries 8.x-3.x, xxxx-xx-xx
 -----------------------------
-#2390301 by rjacobs: Fix DrupalUnitTestBase no longer exists so tests can't load
+by tstoeckler: Fix tests.
+#2390301 by rjacobs: Fix DrupalUnitTestBase no longer exists so tests can't load.
 #2332157 by tstoeckler: Add a composer.json.
 #2287529 by drupalshrek, tstoeckler: Update installation link in README.txt.
 by tstoeckler: Fix tests.

@@ -68,7 +68,7 @@ class ExampleController implements ContainerInjectionInterface {
     $output .= '</ul>';
     $output .= '</div>';
 
-    return $output;
+    return ['#markup' => $output];
   }
 
   public function files() {

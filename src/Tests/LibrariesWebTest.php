@@ -17,9 +17,41 @@ use Drupal\simpletest\WebTestBase;
  */
 class LibrariesWebTest extends WebTestBase {
 
+  /**
+   * {@inheritdoc}
+   */
   protected $profile = 'testing';
 
+  /**
+   * Modules to install.
+   *
+   * @var array
+   */
   static $modules = array('libraries', 'libraries_test');
+
+  /**
+   * The URL generator used in this test.
+   *
+   * @var \Drupal\Core\Utility\UnroutedUrlAssemblerInterface
+   */
+  protected $urlAssembler;
+
+  /**
+   * The state service used in this test.
+   *
+   * @var \Drupal\Core\State\StateInterface
+   */
+  protected $state;
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function setUp() {
+    parent::setUp();
+
+    $this->urlAssembler = $this->container->get('unrouted_url_assembler');
+    $this->state = $this->container->get('state');
+  }
 
   /**
    * Tests libraries_detect_dependencies().
@@ -465,12 +497,17 @@ class LibrariesWebTest extends WebTestBase {
         // JavaScript and CSS files appear as full URLs and with an appended
         // query string.
         if (in_array($extension, array('js', 'css'))) {
-          $filepath = url('', array('absolute' => TRUE)) . $filepath;
-          $filepath .= '?' . \Drupal::state()->get('system.css_js_query_string') ?: '0';
+          $filepath = $this->urlAssembler->assemble("base://$filepath", [
+            'query' => [
+              $this->state->get('system.css_js_query_string') ?: '0' => NULL,
+            ],
+            'absolute' => TRUE,
+          ]);
           // If index.php is part of the generated URLs, we need to strip it.
-          $filepath = str_replace('index.php/', '', $filepath);
+          //$filepath = str_replace('index.php/', '', $filepath);
         }
-        $raw = $html[$extension][0] . $filepath . $html[$extension][1];
+        list($prefix, $suffix) = $html[$extension];
+        $raw = $prefix . $filepath . $suffix;
         if ($expected) {
           $html_expected[] = String::checkPlain($raw);
           $this->assertRaw($raw, "$label$name.$extension found.");
