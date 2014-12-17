@@ -7,14 +7,14 @@
 
 namespace Drupal\libraries\Tests;
 
-use Drupal\simpletest\DrupalUnitTestBase;
+use Drupal\simpletest\KernelTestBase;
 
 /**
  * Tests basic Libraries API functions.
  *
  * @group libraries
  */
-class LibrariesUnitTest extends DrupalUnitTestBase {
+class LibrariesUnitTest extends KernelTestBase {
 
   /**
    * {@inheritdoc}
