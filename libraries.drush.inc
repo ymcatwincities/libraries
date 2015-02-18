@@ -5,6 +5,8 @@
  * Drush integration for Libraries API.
  */
 
+use Drupal\Component\Utility\Unicode;
+
 /**
  * Implements hook_drush_command().
  */
@@ -52,10 +54,7 @@ function libraries_drush_cache_clear(&$types) {
  * Clears the library cache.
  */
 function libraries_drush_invalidate_cache() {
-  // @see drupal_flush_all_caches()
-  foreach (libraries_flush_caches() as $table) {
-    cache_clear_all('*', $table, TRUE);
-  }
+  \Drupal::cache('libraries')->deleteAll();
 }
 
 /**
@@ -78,7 +77,7 @@ function libraries_drush_list() {
     // $header is TRUE.
     $rows[] = array(dt('Name'), dt('Status'), dt('Version'), dt('Variants'), dt('Dependencies'));
     foreach ($libraries as $name => $library) {
-      $status = ($library['installed'] ? dt('OK') : drupal_ucfirst($library['error']));
+      $status = ($library['installed'] ? dt('OK') : Unicode::ucfirst($library['error']));
       $version = (($library['installed'] && !empty($library['version'])) ? $library['version'] : '-');
 
       // Only list installed variants.
