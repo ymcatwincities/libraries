@@ -1,9 +1,8 @@
 
 Libraries 8.x-3.x, xxxx-xx-xx
 -----------------------------
-#2557419 by jonhattan: Fix obsoleted cache bin declaration.
-#2471501 by LKS90: Replace all occurrences of String with the SafeMarkup equivalent.
-by tstoeckler: Fix drush libraries-list and drush cache-clear libraries.
+#2471501 by LKS90: Replace all occurrences of String with the SafeMarkup equivalent
+by tstoeckler: Fix drush libraries-list and drush cache-clear libraries
 #2427801 by Anushka-mp, tstoeckler: Replace module_invoke() call.
 by tstoeckler: Fix tests.
 #2390301 by rjacobs: Fix DrupalUnitTestBase no longer exists so tests can't load.

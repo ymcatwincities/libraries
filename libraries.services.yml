@@ -3,5 +3,6 @@ services:
     class: Drupal\Core\Cache\CacheBackendInterface
     tags:
       - { name: cache.bin }
-    factory: cache_factory:get
+    factory_method: get
+    factory_service: cache_factory
     arguments: [library]
