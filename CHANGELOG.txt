@@ -1,6 +1,7 @@
 
 Libraries 8.x-3.x, xxxx-xx-xx
 -----------------------------
+#2090623 by tstoeckler: Provide a modern, flexible library API
 #2525898 by rjacobs, jonhattan: Fix obsoleted cache bin declaration.
 #2471501 by LKS90: Replace all occurrences of String with the SafeMarkup equivalent.
 by tstoeckler: Fix drush libraries-list and drush cache-clear libraries.

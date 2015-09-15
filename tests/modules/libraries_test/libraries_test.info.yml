@@ -5,3 +5,5 @@ core: 8.x
 dependencies:
   - libraries
 hidden: TRUE
+library_dependencies:
+  - test_asset_library

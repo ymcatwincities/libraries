@@ -6,6 +6,29 @@
  */
 
 use Drupal\Core\Extension\ModuleHandler;
+use Drupal\libraries\ExternalLibrary\Asset\AssetLibraryInterface;
+
+/**
+ * Implements hook_library_info_build().
+ */
+function libraries_library_info_build() {
+  /** @var \Drupal\libraries\ExternalLibrary\ExternalLibraryManagerInterface $library_manager */
+  $library_manager = \Drupal::service('libraries.manager');
+
+  $core_libraries = [];
+  foreach ($library_manager->getRequiredLibraries() as $external_library) {
+    if ($external_library instanceof AssetLibraryInterface) {
+      // Do not use AssetLibraryInterface::getAttachableAssetLibraryId() here
+      // because the module name is automatically prepended.
+      //
+      // The following means that the library namespace of this module is
+      // completely exhausted by the external library space. It should never
+      // provide any core asset libraries of its own.
+      $core_libraries[$external_library->getId()] = $external_library->toAttachableAssetLibrary();
+    }
+  }
+  return $core_libraries;
+}
 
 /**
  * Gets the path of a library.

@@ -1,4 +1,13 @@
 services:
+  libraries.manager:
+    class: Drupal\libraries\ExternalLibrary\ExternalLibraryManager
+    arguments: ['@libraries.registry', '@libraries.extension_handler']
+  libraries.registry:
+    class: Drupal\Component\Plugin\Factory\FactoryInterface
+  libraries.extension_handler:
+    class: Drupal\libraries\Extension\ExtensionHandler
+    arguments: ['%app.root', '@module_handler', '@theme_handler']
+
   cache.libraries:
     class: Drupal\Core\Cache\CacheBackendInterface
     tags:
