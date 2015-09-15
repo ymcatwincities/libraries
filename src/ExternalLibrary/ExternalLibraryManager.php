@@ -9,6 +9,7 @@ namespace Drupal\libraries\ExternalLibrary;
 use Drupal\Component\Plugin\Factory\FactoryInterface;
 use Drupal\libraries\Extension\ExtensionHandlerInterface;
 use Drupal\libraries\ExternalLibrary\PhpFile\PhpFileLibraryInterface;
+use Drupal\libraries\ExternalLibrary\PhpFile\PhpFileLoaderInterface;
 use Drupal\libraries\ExternalLibrary\Registry\ExternalLibraryRegistryInterface;
 
 /**
@@ -44,36 +45,38 @@ class ExternalLibraryManager implements ExternalLibraryManagerInterface {
    *   The library registry.
    * @param \Drupal\libraries\Extension\ExtensionHandlerInterface $extension_handler
    *   The extension handler.
+   * @param \Drupal\libraries\ExternalLibrary\PhpFile\PhpFileLoaderInterface $php_file_loader
+   *   The PHP file loader.
    */
   public function __construct(
     ExternalLibraryRegistryInterface $registry,
-    ExtensionHandlerInterface $extension_handler
+    ExtensionHandlerInterface $extension_handler,
+    PhpFileLoaderInterface $php_file_loader
   ) {
     $this->registry = $registry;
     $this->extensionHandler = $extension_handler;
+    $this->phpFileLoader = $php_file_loader;
   }
 
   /**
    * {@inheritdoc}
    */
   public function getRequiredLibraries() {
-    $libraries = [];
     foreach ($this->extensionHandler->getExtensions() as $extension) {
       foreach ($extension->getLibraryDependencies() as $library_id) {
         // Do not bother instantiating a library multiple times.
         if (!isset($libraries[$library_id])) {
-          $libraries[$library_id] = $this->registry->getLibrary($library_id);
+          yield $this->registry->getLibrary($library_id);
         }
       }
     }
-
-    return $libraries;
   }
 
   /**
    * {@inheritdoc}
    */
   public function load($id) {
+    // @todo Dispatch some type of event, to provide loose coupling.
     $library = $this->registry->getLibrary($id);
     if ($library instanceof PhpFileLibraryInterface) {
       foreach ($library->getPhpFiles() as $file) {

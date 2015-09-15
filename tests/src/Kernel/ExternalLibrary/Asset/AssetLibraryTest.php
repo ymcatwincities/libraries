@@ -11,7 +11,7 @@ use Drupal\Component\FileCache\ApcuFileCacheBackend;
 use Drupal\Component\FileCache\FileCache;
 use Drupal\Component\FileCache\FileCacheFactory;
 use Drupal\Core\Site\Settings;
-use Drupal\KernelTests\KernelTestBase;
+use Drupal\Tests\libraries\Kernel\KernelTestBase;
 use Drupal\libraries\ExternalLibrary\Asset\AssetLibrary;
 use Drupal\libraries\ExternalLibrary\Registry\ExternalLibraryRegistryInterface;
 
@@ -41,8 +41,6 @@ class AssetLibraryTest extends KernelTestBase {
    * {@inheritdoc}
    */
   protected function setUp() {
-    $this->initFileCache();
-
     parent::setUp();
 
     $library = new AssetLibrary('test_asset_library');
@@ -54,36 +52,14 @@ class AssetLibraryTest extends KernelTestBase {
   }
 
   /**
-   * Initializes the FileCacheFactory component.
+   * Tests that an external asset library is registered as a core asset library.
    *
-   * We can not use the Settings object in a component, that's why we have to do
-   * it here instead of \Drupal\Component\FileCache\FileCacheFactory.
-   *
-   * @see https://www.drupal.org/node/2553661
-   */
-  protected function initFileCache() {
-    $configuration = Settings::get('file_cache');
-
-    // Provide a default configuration, if not set.
-    if (!isset($configuration['default'])) {
-      $configuration['default'] = [
-        'class' => FileCache::class,
-        'cache_backend_class' => NULL,
-        'cache_backend_configuration' => [],
-      ];
-      // @todo Use extension_loaded('apcu') for non-testbot
-      //  https://www.drupal.org/node/2447753.
-      if (function_exists('apc_fetch')) {
-        $configuration['default']['cache_backend_class'] = ApcuFileCacheBackend::class;
-      }
-    }
-    FileCacheFactory::setConfiguration($configuration);
-    FileCacheFactory::setPrefix(Settings::getApcuPrefix('file_cache', $this->root));
-  }
-
-
-  /**
-   * {@inheritdoc}
+   * @covers \Drupal\libraries\Extension\Extension
+   * @covers \Drupal\libraries\Extension\ExtensionHandler
+   * @covers \Drupal\libraries\ExternalLibrary\Asset\AssetLibrary
+   * @covers \Drupal\libraries\ExternalLibrary\Asset\AssetLibraryTrait
+   * @covers \Drupal\libraries\ExternalLibrary\ExternalLibraryManager
+   * @covers \Drupal\libraries\ExternalLibrary\ExternalLibraryTrait
    */
   public function testAssetLibrary() {
     $library = $this->libraryDiscovery->getLibraryByName('libraries', 'test_asset_library');
