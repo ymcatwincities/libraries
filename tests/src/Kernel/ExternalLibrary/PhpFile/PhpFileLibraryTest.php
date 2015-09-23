@@ -14,6 +14,8 @@ use Drupal\Tests\libraries\Kernel\KernelTestBase;
 
 /**
  * Tests that the external library manager properly loads PHP file libraries.
+ *
+ * @group libraries
  */
 class PhpFileLibraryTest extends KernelTestBase {
 
