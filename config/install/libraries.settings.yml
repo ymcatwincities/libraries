@@ -1,0 +1,7 @@
+library_definitions:
+  local:
+    path: 'public://library-definitions'
+  remote:
+    # @todo Enable this by default, when there is an actual canonical registry.
+    enable: false
+    url: ''

@@ -7,7 +7,6 @@
 
 namespace Drupal\Tests\libraries\Kernel\ExternalLibrary\PhpFile;
 
-use Drupal\libraries\ExternalLibrary\Asset\AssetLibrary;
 use Drupal\libraries\ExternalLibrary\PhpFile\PhpFileLibraryInterface;
 use Drupal\libraries\ExternalLibrary\Registry\ExternalLibraryRegistryInterface;
 use Drupal\Tests\libraries\Kernel\KernelTestBase;

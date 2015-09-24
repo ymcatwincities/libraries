@@ -24,9 +24,13 @@ trait ExternalLibraryTrait {
    *
    * @param string $id
    *   The library ID.
+   * @param array $definition
+   *   The library definition array parsed from the definition JSON file.
    */
-  public function __construct($id) {
+  public function __construct($id, array $definition) {
     $this->id = (string) $id;
+    // @todo Split this into proper properties.
+    $this->definition = $definition;
   }
 
   /**
@@ -65,6 +69,20 @@ trait ExternalLibraryTrait {
   public function getDependencies() {
     // @todo Turn into something useful and split into some other trait.
     return [];
+  }
+
+  /**
+   * Creates an instance of the library from its definition.
+   *
+   * @param string $id
+   *   The library ID.
+   * @param array $definition
+   *   The library definition array parsed from the definition JSON file.
+   *
+   * @return static
+   */
+  public static function create($id, array $definition) {
+    return new static($id, $definition);
   }
 
 }

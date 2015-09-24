@@ -19,7 +19,7 @@ interface ExternalLibraryInterface {
    * @return string
    *   The library ID. This must be unique among all known libraries.
    *
-   * @todo Define what constitutes as "known" library.
+   * @todo Define what constitutes a "known" library.
    */
   public function getId();
 
@@ -38,5 +38,19 @@ interface ExternalLibraryInterface {
    *   An array of library IDs of libraries that the library depends on.
    */
   public function getDependencies();
+
+  /**
+   * Creates an instance of the library from its definition.
+   *
+   * @param string $id
+   *   The library ID.
+   * @param array $definition
+   *   The library definition array parsed from the definition JSON file.
+   *
+   * @return static
+   *
+   * @todo Consider passing in some stuff that might be useful.
+   */
+  public static function create($id, array $definition);
 
 }

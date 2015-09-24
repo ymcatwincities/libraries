@@ -6,12 +6,18 @@ services:
       - '@libraries.extension_handler'
       - '@libraries.php_file_loader'
   libraries.registry:
-    class: Drupal\libraries\ExternalLibrary\Registry\ExternalLibraryRegistryInterface
+    class: Drupal\libraries\ExternalLibrary\Registry\ExternalLibraryRegistry
+    arguments: ['@serialization.json']
   libraries.extension_handler:
     class: Drupal\libraries\Extension\ExtensionHandler
     arguments: ['%app.root', '@module_handler', '@theme_handler']
   libraries.php_file_loader:
     class: Drupal\libraries\ExternalLibrary\PhpFile\PhpRequireLoader
+  stream_wrapper.translations:
+    class: Drupal\libraries\StreamWrapper\LibraryDefinitionsStream
+    arguments: ['@config.factory', '@http_client']
+    tags:
+      - { name: stream_wrapper, scheme: 'library-definitions' }
 
   cache.libraries:
     class: Drupal\Core\Cache\CacheBackendInterface
