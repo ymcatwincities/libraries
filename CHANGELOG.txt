@@ -1,6 +1,7 @@
 
 Libraries 8.x-3.x, xxxx-xx-xx
 -----------------------------
+#2090623 by tstoeckler: Add an external library registry
 #2572401 by rjacobs, yas: Fix missing @group annotation in PhpFileLibraryTest
 #2090623 by tstoeckler: Add a test for PHP file loading
 #2090623 by tstoeckler: Provide a modern, flexible library API
