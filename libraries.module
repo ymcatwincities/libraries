@@ -5,6 +5,7 @@
  * External library handling for Drupal modules.
  */
 
+use Drupal\Core\DrupalKernel;
 use Drupal\Core\Extension\ModuleHandler;
 use Drupal\libraries\ExternalLibrary\Asset\AssetLibraryInterface;
 
@@ -80,7 +81,7 @@ function libraries_get_path($name, $base_path = FALSE) {
 function libraries_get_libraries() {
   $searchdir = array();
   $profile = drupal_get_path('profile', drupal_get_profile());
-  $config = conf_path();
+  $config = DrupalKernel::findSitePath(\Drupal::request());
 
   // @todo core/libraries
 
@@ -133,7 +134,7 @@ function libraries_get_libraries() {
  */
 function libraries_scan_info_files() {
   $profile = drupal_get_path('profile', drupal_get_profile());
-  $config = conf_path();
+  $config = DrupalKernel::findSitePath(\Drupal::request());
 
   // Build a list of directories.
   $directories = \Drupal::moduleHandler()->invokeAll('libraries_info_file_paths', $args = array());
