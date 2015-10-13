@@ -80,7 +80,6 @@ function libraries_get_path($name, $base_path = FALSE) {
  */
 function libraries_get_libraries() {
   $searchdir = array();
-  $profile = drupal_get_path('profile', drupal_get_profile());
   $config = DrupalKernel::findSitePath(\Drupal::request());
 
   // @todo core/libraries
@@ -88,7 +87,10 @@ function libraries_get_libraries() {
   // Similar to 'modules' and 'themes' directories inside an installation
   // profile, installation profiles may want to place libraries into a
   // 'libraries' directory.
-  $searchdir[] = "$profile/libraries";
+  if ($profile = drupal_get_profile()) {
+    drupal_get_path('profile', $profile);
+    $searchdir[] = "$profile/libraries";
+  };
 
   // Search sites/all/libraries for backwards-compatibility.
   $searchdir[] = 'sites/all/libraries';
