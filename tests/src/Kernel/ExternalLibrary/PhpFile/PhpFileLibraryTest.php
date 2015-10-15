@@ -57,7 +57,6 @@ class PhpFileLibraryTest extends KernelTestBase {
    *
    * @covers \Drupal\libraries\ExternalLibrary\ExternalLibraryManager
    * @covers \Drupal\libraries\ExternalLibrary\ExternalLibraryTrait
-   * @covers \Drupal\libraries\ExternalLibrary\PhpFile\PhpFileLibrary
    * @covers \Drupal\libraries\ExternalLibrary\PhpFile\PhpRequireLoader
    */
   public function testPhpFileLibrary() {

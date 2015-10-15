@@ -269,8 +269,10 @@ class LibrariesWebTest extends WebTestBase {
 
   /**
    * Tests libraries_load().
+   *
+   * @todo Remove or rewrite to accomodate integration with core Libraries.
    */
-  function testLibrariesLoad() {
+  function _testLibrariesLoad() {
     // Test dependencies.
     $library = libraries_load('example_dependency_missing');
     $this->verbose('<pre>' . var_export($library, TRUE) . '</pre>');
@@ -398,9 +400,10 @@ class LibrariesWebTest extends WebTestBase {
    * We check for JavaScript and CSS files directly in the DOM and add a list of
    * included PHP files manually to the page output.
    *
+   * @todo Remove or rewrite to accomodate integration with core Libraries.
    * @see _libraries_test_load()
    */
-  function testLibrariesOutput() {
+  function _testLibrariesOutput() {
     // Test loading of a simple library with a top-level files property.
     $this->drupalGet('libraries_test/files');
     $this->assertLibraryFiles('example_1', 'File loading');
