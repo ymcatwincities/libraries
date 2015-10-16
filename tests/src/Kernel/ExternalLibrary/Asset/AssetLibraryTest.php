@@ -7,14 +7,14 @@
 
 namespace Drupal\Tests\libraries\Kernel\ExternalLibrary\Asset;
 
-use Drupal\Tests\libraries\Kernel\KernelTestBase;
+use Drupal\Tests\libraries\Kernel\ExternalLibraryKernelTestBase;
 
 /**
  * Tests that external asset libraries are registered as core asset libraries.
  *
  * @group libraries
  */
-class AssetLibraryTest extends KernelTestBase {
+class AssetLibraryTest extends ExternalLibraryKernelTestBase {
 
   /**
    * {@inheritdoc}
@@ -37,31 +37,19 @@ class AssetLibraryTest extends KernelTestBase {
   protected function setUp() {
     parent::setUp();
 
-    /** @var \Drupal\Core\Extension\ModuleHandlerInterface $module_handler */
-    $root = $this->container->get('app.root');
-    $module_handler = $this->container->get('module_handler');
-    $module_path = $module_handler->getModule('libraries')->getPath();
-
-    $this->installConfig('libraries');
-    /** @var \Drupal\Core\Config\ConfigFactoryInterface $config_factory */
-    $config_factory = $this->container->get('config.factory');
-    $config_factory->getEditable('libraries.settings')
-      ->set('library_definitions.local.path', "$root/$module_path/tests/library_definitions")
-      ->save();
-
     $this->libraryDiscovery = $this->container->get('library.discovery');
   }
 
   /**
    * Tests that an external asset library is registered as a core asset library.
    *
-   * @covers \Drupal\libraries\Extension\Extension
-   * @covers \Drupal\libraries\Extension\ExtensionHandler
-   * @covers \Drupal\libraries\ExternalLibrary\Asset\AssetLibrary
-   * @covers \Drupal\libraries\ExternalLibrary\Asset\AssetLibraryTrait
-   * @covers \Drupal\libraries\ExternalLibrary\ExternalLibraryManager
-   * @covers \Drupal\libraries\ExternalLibrary\ExternalLibraryTrait
-   * @covers \Drupal\libraries\ExternalLibrary\Registry\ExternalLibraryRegistry
+   * @see \Drupal\libraries\Extension\Extension
+   * @see \Drupal\libraries\Extension\ExtensionHandler
+   * @see \Drupal\libraries\ExternalLibrary\Asset\AssetLibrary
+   * @see \Drupal\libraries\ExternalLibrary\Asset\AssetLibraryTrait
+   * @see \Drupal\libraries\ExternalLibrary\ExternalLibraryManager
+   * @see \Drupal\libraries\ExternalLibrary\ExternalLibraryTrait
+   * @see \Drupal\libraries\ExternalLibrary\Registry\ExternalLibraryRegistry
    */
   public function testAssetLibrary() {
     $library = $this->libraryDiscovery->getLibraryByName('libraries', 'test_asset_library');

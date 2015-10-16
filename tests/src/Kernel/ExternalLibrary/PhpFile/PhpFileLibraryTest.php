@@ -9,14 +9,14 @@ namespace Drupal\Tests\libraries\Kernel\ExternalLibrary\PhpFile;
 
 use Drupal\libraries\ExternalLibrary\PhpFile\PhpFileLibraryInterface;
 use Drupal\libraries\ExternalLibrary\Registry\ExternalLibraryRegistryInterface;
-use Drupal\Tests\libraries\Kernel\KernelTestBase;
+use Drupal\Tests\libraries\Kernel\ExternalLibraryKernelTestBase;
 
 /**
  * Tests that the external library manager properly loads PHP file libraries.
  *
  * @group libraries
  */
-class PhpFileLibraryTest extends KernelTestBase {
+class PhpFileLibraryTest extends ExternalLibraryKernelTestBase {
 
   /**
    * {@inheritdoc}
@@ -55,19 +55,20 @@ class PhpFileLibraryTest extends KernelTestBase {
   /**
    * Tests that the external library manager properly loads PHP file libraries.
    *
-   * @covers \Drupal\libraries\ExternalLibrary\ExternalLibraryManager
-   * @covers \Drupal\libraries\ExternalLibrary\ExternalLibraryTrait
-   * @covers \Drupal\libraries\ExternalLibrary\PhpFile\PhpRequireLoader
+   * @see \Drupal\libraries\ExternalLibrary\ExternalLibraryManager
+   * @see \Drupal\libraries\ExternalLibrary\ExternalLibraryTrait
+   * @see \Drupal\libraries\ExternalLibrary\PhpFile\PhpRequireLoader
    */
   public function testPhpFileLibrary() {
-    if (function_exists('_libraries_test_example_1')) {
+    $function_name = '_libraries_test_example_1';
+    if (function_exists($function_name)) {
       $this->markTestSkipped('Cannot test file inclusion if the file to be included has already been included prior.');
       return;
     }
 
-    $this->assertFalse(function_exists('_libraries_test_example_1'));
+    $this->assertFalse(function_exists($function_name));
     $this->externalLibraryManager->load('test_php_file_library');
-    $this->assertTrue(function_exists('_libraries_test_example_1'));
+    $this->assertTrue(function_exists($function_name));
   }
 
 }
