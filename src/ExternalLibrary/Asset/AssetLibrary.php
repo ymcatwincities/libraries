@@ -15,7 +15,7 @@ use Drupal\libraries\ExternalLibrary\ExternalLibraryTrait;
 class AssetLibrary implements AssetLibraryInterface {
 
   use ExternalLibraryTrait;
-  use AssetLibraryTrait;
+  use SingleAssetLibraryTrait;
 
   /**
    * {@inheritdoc}

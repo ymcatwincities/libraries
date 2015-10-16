@@ -19,21 +19,18 @@ use Drupal\libraries\ExternalLibrary\ExternalLibraryInterface;
 interface AssetLibraryInterface extends ExternalLibraryInterface {
 
   /**
-   * Gets the ID of the respective core asset library.
-   *
-   * @return string
-   *
-   * @todo Reconsider this method.
-   */
-  public function getAttachableAssetLibraryId();
-
-  /**
    * Returns a core asset library array structure for this library.
    *
    * @return array
    *
+   * @see libraries_library_info_build()
+   * @see \Drupal\libraries\ExternalLibrary\Asset\SingleAssetLibraryTrait
+   *
+   * @throws \Drupal\libraries\ExternalLibrary\Exception\InvalidLibraryDependencyException
+   * @throws \LogicException
+   *
    * @todo Document the return value.
    */
-  public function toAttachableAssetLibrary();
+  public function getAttachableAssetLibraries();
 
 }

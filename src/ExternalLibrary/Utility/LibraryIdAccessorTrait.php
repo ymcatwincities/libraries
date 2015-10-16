@@ -2,15 +2,15 @@
 
 /**
  * @file
- * Contains \Drupal\libraries\ExternalLibrary\Exception\LibraryExceptionTrait.
+ * Contains \Drupal\libraries\ExternalLibrary\Utility\LibraryIdAccessorTrait.
  */
 
-namespace Drupal\libraries\ExternalLibrary\Exception;
+namespace Drupal\libraries\ExternalLibrary;
 
 /**
- * Provides a trait for library-related exceptions.
+ * Provides a trait for classes giving access to a library ID.
  */
-trait LibraryExceptionTrait {
+trait LibraryIdAccessorTrait {
 
   /**
    * The library ID of the library that caused the exception.

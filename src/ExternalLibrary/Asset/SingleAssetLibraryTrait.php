@@ -7,51 +7,69 @@
 
 namespace Drupal\libraries\ExternalLibrary\Asset;
 
+use Drupal\libraries\ExternalLibrary\Exception\InvalidLibraryDependencyException;
 use Drupal\libraries\ExternalLibrary\ExternalLibraryInterface;
 
 /**
- * Provides a trait for asset libraries.
+ * Provides a trait for external libraries that contain a single asset library.
  *
  * @see \Drupal\libraries\ExternalLibrary\Asset\AssetLibraryInterface
  * @see \Drupal\libraries\ExternalLibrary\ExternalLibraryInterface
  */
-trait AssetLibraryTrait {
-
-  /**
-   * Gets the ID of the respective core asset library.
-   *
-   * @return string
-   *
-   * @see \Drupal\libraries\ExternalLibrary\Asset\AssetLibraryInterface::getAttachableAssetLibraryId()
-   */
-  public function getAttachableAssetLibraryId() {
-    return 'libraries/' . $this->getId();
-  }
+trait SingleAssetLibraryTrait {
 
   /**
    * Returns a core library array structure for this library.
    *
    * @return array
    *
-   * @see \Drupal\libraries\ExternalLibrary\Asset\AssetLibraryInterface::toAttachableAssetLibrary()
+   * @see \Drupal\libraries\ExternalLibrary\Asset\getAttachableAssetLibraries::getAttachableAssetLibraries()
+   *
+   * @throws \Drupal\libraries\ExternalLibrary\Exception\InvalidLibraryDependencyException
+   * @throws \LogicException
    *
    * @todo Document the return value.
    */
-  public function toAttachableAssetLibrary() {
-    $dependencies = array_map(function (ExternalLibraryInterface $dependency) {
-      // Asset libraries depending on PHP file libraries, for example, are not
-      // compatible with Drupal's render pipeline.
-      // @todo Consider doing something other than an assertion.
-      assert('$dependency instanceof \Drupal\libraries\ExternalLibrary\Asset\AssetLibraryInterface');
-      /** @var \Drupal\libraries\ExternalLibrary\Asset\AssetLibraryInterface $dependency */
-      return $dependency->getAttachableAssetLibraryId();
-    }, $this->getDependencies());
-    return [
+  public function getAttachableAssetLibraries() {
+    return [$this->getId() => [
       'version' => $this->getVersion(),
       'css' => $this->getCssAssets(),
       'js' => $this->getJsAssets(),
-      'dependencies' => $dependencies,
-    ];
+      'dependencies' => $this->processDependencies($this->getDependencies()),
+    ]];
+  }
+
+  /**
+   * Processes a list of dependencies into a list of attachable library IDs.
+   *
+   * @param \Drupal\libraries\ExternalLibrary\ExternalLibraryInterface[] $dependencies
+   *   An list of external libraries.
+   *
+   * @return string[]
+   *   A list of attachable asset library IDs.
+   *
+   * @throws \Drupal\libraries\ExternalLibrary\Exception\InvalidLibraryDependencyException
+   * @throws \LogicException
+   */
+  protected function processDependencies(array $dependencies) {
+    $attachable_dependency_ids = [];
+    foreach ($dependencies as $dependency) {
+      if (!$dependency instanceof AssetLibraryInterface) {
+        if (!$this instanceof ExternalLibraryInterface) {
+          $trait = self::class;
+          $interface = ExternalLibraryInterface::class;
+          throw new \LogicException("$trait may only be used in classes implementing $interface");
+        }
+        /** @var \Drupal\libraries\ExternalLibrary\ExternalLibraryInterface $this */
+        throw new InvalidLibraryDependencyException($this, $dependency);
+      }
+
+      foreach (array_keys($dependency->getAttachableAssetLibraries()) as $attachable_dependency_id) {
+        // @todo It is not very elegant to hard-code the namespace here.
+        $attachable_dependency_ids[] = 'libraries/' . $attachable_dependency_id;
+      }
+    }
+    return $attachable_dependency_ids;
   }
 
   /**
@@ -97,7 +115,7 @@ trait AssetLibraryTrait {
    * @see https://smacss.com/
    *
    * @todo Expand documentation.
-   * @todo Consider moving this back to AssetLibraryInterface
+   * @todo Consider adding separate methods for the CSS categories.
    */
   abstract protected function getCssAssets();
 
@@ -110,9 +128,7 @@ trait AssetLibraryTrait {
    *   options.
    *
    * @todo Expand documentation.
-   * @todo Consider moving this back to AssetLibraryInterface
    */
   abstract protected function getJsAssets();
 
 }
-
