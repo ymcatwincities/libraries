@@ -16,7 +16,7 @@ use Drupal\Core\Site\Settings;
 /**
  * Provides an improved version of the core kernel test base class.
  */
-class ExternalLibraryKernelTestBase extends CoreKernelTestBase {
+abstract class ExternalLibraryKernelTestBase extends CoreKernelTestBase {
 
   /**
    * {@inheritdoc}
