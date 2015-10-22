@@ -33,7 +33,9 @@ interface ExternalLibraryManagerInterface {
    * @param string $id
    *   The ID of the library.
    *
-   * @throws
+   * @throws \Drupal\libraries\ExternalLibrary\Exception\LibraryClassNotFoundException
+   * @throws \Drupal\libraries\ExternalLibrary\Exception\LibraryDefinitionNotFoundException
+   * @throws \Drupal\libraries\ExternalLibrary\Exception\LibraryNotInstalledException
    */
   public function load($id);
 

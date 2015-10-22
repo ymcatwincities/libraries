@@ -27,7 +27,6 @@ interface AssetLibraryInterface extends ExternalLibraryInterface {
    * @see \Drupal\libraries\ExternalLibrary\Asset\SingleAssetLibraryTrait
    *
    * @throws \Drupal\libraries\ExternalLibrary\Exception\InvalidLibraryDependencyException
-   * @throws \LogicException
    *
    * @todo Document the return value.
    */

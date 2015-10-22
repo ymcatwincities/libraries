@@ -22,8 +22,8 @@ interface ExternalLibraryRegistryInterface {
    * @return \Drupal\libraries\ExternalLibrary\ExternalLibraryInterface
    *   The library.
    *
-   * @throws \Drupal\libraries\ExternalLibrary\Exception\LibraryDefinitionNotFoundException
    * @throws \Drupal\libraries\ExternalLibrary\Exception\LibraryClassNotFoundException
+   * @throws \Drupal\libraries\ExternalLibrary\Exception\LibraryDefinitionNotFoundException
    */
   public function getLibrary($id);
 

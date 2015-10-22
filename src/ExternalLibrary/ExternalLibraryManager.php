@@ -78,9 +78,11 @@ class ExternalLibraryManager implements ExternalLibraryManagerInterface {
   public function load($id) {
     // @todo Dispatch some type of event, to provide loose coupling.
     $library = $this->registry->getLibrary($id);
+    // @todo Throw an exception instead of silently failing.
     if ($library instanceof PhpFileLibraryInterface) {
+      $path = $library->getLibraryPath();
       foreach ($library->getPhpFiles() as $file) {
-        $this->phpFileLoader->load($file);
+        $this->phpFileLoader->load($path . '/' . $file);
       }
     }
   }

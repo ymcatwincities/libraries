@@ -7,8 +7,6 @@
 
 namespace Drupal\Tests\libraries\Kernel\ExternalLibrary\PhpFile;
 
-use Drupal\libraries\ExternalLibrary\PhpFile\PhpFileLibraryInterface;
-use Drupal\libraries\ExternalLibrary\Registry\ExternalLibraryRegistryInterface;
 use Drupal\Tests\libraries\Kernel\ExternalLibraryKernelTestBase;
 
 /**
@@ -36,20 +34,9 @@ class PhpFileLibraryTest extends ExternalLibraryKernelTestBase {
   protected function setUp() {
     parent::setUp();
 
-    $root = $this->container->get('app.root');
-    /** @var \Drupal\Core\Extension\ModuleHandlerInterface $module_handler */
-    $module_handler = $this->container->get('module_handler');
-    $module_path = $module_handler->getModule('libraries')->getPath();
-
-    $library = $this->prophesize(PhpFileLibraryInterface::class);
-    $library->getPhpFiles()->willReturn([
-      $root . '/' . $module_path . '/tests/example/example_1.php',
-    ]);
-    $registry = $this->prophesize(ExternalLibraryRegistryInterface::class);
-    $registry->getLibrary('test_php_file_library')->willReturn($library->reveal());
-    $this->container->set('libraries.registry', $registry->reveal());
-
     $this->externalLibraryManager = $this->container->get('libraries.manager');
+
+    $this->container->set('stream_wrapper.php_library_files', new TestPhpLibraryFilesStream());
   }
 
   /**
@@ -60,7 +47,7 @@ class PhpFileLibraryTest extends ExternalLibraryKernelTestBase {
    * @see \Drupal\libraries\ExternalLibrary\PhpFile\PhpRequireLoader
    */
   public function testPhpFileLibrary() {
-    $function_name = '_libraries_test_example_1';
+    $function_name = '_libraries_test_php_function';
     if (function_exists($function_name)) {
       $this->markTestSkipped('Cannot test file inclusion if the file to be included has already been included prior.');
       return;

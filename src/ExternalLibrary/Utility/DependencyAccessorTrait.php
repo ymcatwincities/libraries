@@ -5,7 +5,7 @@
  * Contains \Drupal\libraries\ExternalLibrary\Utility\DependencyAccessorTrait.
  */
 
-namespace Drupal\libraries\ExternalLibrary;
+namespace Drupal\libraries\ExternalLibrary\Utility;
 
 /**
  * Provides a trait for classes giving access to a library dependency.

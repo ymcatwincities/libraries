@@ -20,6 +20,9 @@ use Drupal\Core\StreamWrapper\StreamWrapperInterface;
  */
 class LibraryDefinitionsStream extends LocalStream {
 
+  use LocalHiddenStreamTrait;
+  use PrivateStreamTrait;
+
   /**
    * The config factory
    *
@@ -39,13 +42,6 @@ class LibraryDefinitionsStream extends LocalStream {
   /**
    * {@inheritdoc}
    */
-  public static function getType() {
-    return StreamWrapperInterface::LOCAL_HIDDEN;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function getName() {
     return t('Library definitions');
   }
@@ -54,7 +50,7 @@ class LibraryDefinitionsStream extends LocalStream {
    * {@inheritdoc}
    */
   public function getDescription() {
-    return t('Provides access to library definition files fetched from the remote canonical library registry.');
+    return t('Provides access to library definition files.');
   }
 
   /**
@@ -63,13 +59,6 @@ class LibraryDefinitionsStream extends LocalStream {
   public function getDirectoryPath() {
     return $this->getConfig('local.path');
   }
-
-  /**
-   * {@inheritdoc}
-   */
-    function getExternalUrl() {
-      throw new \LogicException('Library definitions should not be public.');
-    }
 
   /**
    * Fetches a configuration value from the library definitions configuration.

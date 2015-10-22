@@ -8,10 +8,12 @@
 namespace Drupal\libraries\ExternalLibrary\Asset;
 
 use Drupal\libraries\ExternalLibrary\Exception\InvalidLibraryDependencyException;
-use Drupal\libraries\ExternalLibrary\ExternalLibraryInterface;
 
 /**
  * Provides a trait for external libraries that contain a single asset library.
+ *
+ * This trait should only be used by classes implementing
+ * ExternalLibraryInterface.
  *
  * @see \Drupal\libraries\ExternalLibrary\Asset\AssetLibraryInterface
  * @see \Drupal\libraries\ExternalLibrary\ExternalLibraryInterface
@@ -26,7 +28,6 @@ trait SingleAssetLibraryTrait {
    * @see \Drupal\libraries\ExternalLibrary\Asset\getAttachableAssetLibraries::getAttachableAssetLibraries()
    *
    * @throws \Drupal\libraries\ExternalLibrary\Exception\InvalidLibraryDependencyException
-   * @throws \LogicException
    *
    * @todo Document the return value.
    */
@@ -49,17 +50,11 @@ trait SingleAssetLibraryTrait {
    *   A list of attachable asset library IDs.
    *
    * @throws \Drupal\libraries\ExternalLibrary\Exception\InvalidLibraryDependencyException
-   * @throws \LogicException
    */
   protected function processDependencies(array $dependencies) {
     $attachable_dependency_ids = [];
     foreach ($dependencies as $dependency) {
       if (!$dependency instanceof AssetLibraryInterface) {
-        if (!$this instanceof ExternalLibraryInterface) {
-          $trait = self::class;
-          $interface = ExternalLibraryInterface::class;
-          throw new \LogicException("$trait may only be used in classes implementing $interface");
-        }
         /** @var \Drupal\libraries\ExternalLibrary\ExternalLibraryInterface $this */
         throw new InvalidLibraryDependencyException($this, $dependency);
       }

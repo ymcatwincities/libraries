@@ -20,20 +20,6 @@ trait ExternalLibraryTrait {
   protected $id;
 
   /**
-   * Construct an external library.
-   *
-   * @param string $id
-   *   The library ID.
-   * @param array $definition
-   *   The library definition array parsed from the definition JSON file.
-   */
-  public function __construct($id, array $definition) {
-    $this->id = (string) $id;
-    // @todo Split this into proper properties.
-    $this->definition = $definition;
-  }
-
-  /**
    * Returns the ID of the library.
    *
    * @return string
