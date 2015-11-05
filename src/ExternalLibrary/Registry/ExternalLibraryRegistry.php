@@ -44,7 +44,7 @@ class ExternalLibraryRegistry implements ExternalLibraryRegistryInterface {
       throw new LibraryDefinitionNotFoundException($id);
     }
     $definition = $this->getDefinition($id);
-    $class = $this->getClass($definition);
+    $class = $this->getClass($id, $definition);
     return $class::create($id, $definition);
   }
 
@@ -91,6 +91,8 @@ class ExternalLibraryRegistry implements ExternalLibraryRegistryInterface {
   /**
    * Returns the library class for a library definition.
    *
+   * @param string $id
+   *   The ID of the external library.
    * @param array $definition
    *   The library definition array parsed from the definition JSON file.
    *
@@ -99,11 +101,10 @@ class ExternalLibraryRegistry implements ExternalLibraryRegistryInterface {
    *
    * @throws \Drupal\libraries\ExternalLibrary\Exception\LibraryClassNotFoundException
    */
-  protected function getClass(array $definition) {
+  protected function getClass($id, array $definition) {
     // @todo Reconsider
     if (!isset($definition['class'])) {
-      // @todo What if $definition['id'] is not set?
-      throw new LibraryClassNotFoundException($definition['id']);
+      throw new LibraryClassNotFoundException($id);
     }
     // @todo Make sure the class exists.
     return $definition['class'];

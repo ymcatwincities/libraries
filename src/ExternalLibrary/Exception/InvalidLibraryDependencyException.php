@@ -6,9 +6,9 @@
  */
 
 namespace Drupal\libraries\ExternalLibrary\Exception;
-use Drupal\libraries\ExternalLibrary\DependencyAccessorTrait;
+use Drupal\libraries\ExternalLibrary\Utility\DependencyAccessorTrait;
 use Drupal\libraries\ExternalLibrary\ExternalLibraryInterface;
-use Drupal\libraries\ExternalLibrary\LibraryAccessorTrait;
+use Drupal\libraries\ExternalLibrary\Utility\LibraryAccessorTrait;
 
 /**
  *

@@ -6,7 +6,8 @@
  */
 
 namespace Drupal\libraries\ExternalLibrary\Exception;
-use Drupal\libraries\ExternalLibrary\LibraryIdAccessorTrait;
+
+use Drupal\libraries\ExternalLibrary\Utility\LibraryIdAccessorTrait;
 use Exception;
 
 /**

@@ -39,6 +39,7 @@ class PhpLibraryFilesStream extends LocalStream {
    * {@inheritdoc}
    */
   public function getDirectoryPath() {
+    // @todo Provide support for site-specific directories, etc.
     return 'sites/all/libraries';
   }
 
