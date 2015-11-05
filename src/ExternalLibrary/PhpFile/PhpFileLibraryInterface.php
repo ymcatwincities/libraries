@@ -7,7 +7,7 @@
 
 namespace Drupal\libraries\ExternalLibrary\PhpFile;
 
-use Drupal\libraries\ExternalLibrary\LocalLibraryInterface;
+use Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface;
 
 /**
  * Provides an interface for libraries which can be loaded.
@@ -19,7 +19,7 @@ interface PhpFileLibraryInterface extends LocalLibraryInterface {
   /**
    * Returns the PHP files of this library.
    *
-   * @return string[]
+   * @return string[]|\Generator
    *   An array of absolute file paths of PHP files.
    */
   public function getPhpFiles();

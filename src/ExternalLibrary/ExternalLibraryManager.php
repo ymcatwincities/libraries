@@ -25,6 +25,13 @@ class ExternalLibraryManager implements ExternalLibraryManagerInterface {
   protected $registry;
 
   /**
+   * The library locator factory.
+   *
+   * @var \Drupal\Component\Plugin\Factory\FactoryInterface
+   */
+  protected $locatorFactory;
+
+  /**
    * The extension handler.
    *
    * @var \Drupal\libraries\Extension\ExtensionHandlerInterface
@@ -43,6 +50,8 @@ class ExternalLibraryManager implements ExternalLibraryManagerInterface {
    *
    * @param \Drupal\libraries\ExternalLibrary\Registry\ExternalLibraryRegistryInterface $registry
    *   The library registry.
+   * @param \Drupal\Component\Plugin\Factory\FactoryInterface $locator_factory
+   *   The library locator factory.
    * @param \Drupal\libraries\Extension\ExtensionHandlerInterface $extension_handler
    *   The extension handler.
    * @param \Drupal\libraries\ExternalLibrary\PhpFile\PhpFileLoaderInterface $php_file_loader
@@ -50,10 +59,12 @@ class ExternalLibraryManager implements ExternalLibraryManagerInterface {
    */
   public function __construct(
     ExternalLibraryRegistryInterface $registry,
+    FactoryInterface $locator_factory,
     ExtensionHandlerInterface $extension_handler,
     PhpFileLoaderInterface $php_file_loader
   ) {
     $this->registry = $registry;
+    $this->locatorFactory = $locator_factory;
     $this->extensionHandler = $extension_handler;
     $this->phpFileLoader = $php_file_loader;
   }
@@ -62,14 +73,16 @@ class ExternalLibraryManager implements ExternalLibraryManagerInterface {
    * {@inheritdoc}
    */
   public function getRequiredLibraries() {
+    $libraries = [];
     foreach ($this->extensionHandler->getExtensions() as $extension) {
       foreach ($extension->getLibraryDependencies() as $library_id) {
         // Do not bother instantiating a library multiple times.
         if (!isset($libraries[$library_id])) {
-          yield $this->registry->getLibrary($library_id);
+          $libraries[$library_id] = $this->registry->getLibrary($library_id);
         }
       }
     }
+    return $libraries;
   }
 
   /**
@@ -80,9 +93,11 @@ class ExternalLibraryManager implements ExternalLibraryManagerInterface {
     $library = $this->registry->getLibrary($id);
     // @todo Throw an exception instead of silently failing.
     if ($library instanceof PhpFileLibraryInterface) {
-      $path = $library->getLibraryPath();
+      // @todo Somehow make it possible to not repeat this in case the library
+      //   has already been located.
+      $library->getLocator($this->locatorFactory)->locate($library);
       foreach ($library->getPhpFiles() as $file) {
-        $this->phpFileLoader->load($path . '/' . $file);
+        $this->phpFileLoader->load($file);
       }
     }
   }

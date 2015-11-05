@@ -7,7 +7,7 @@
 
 namespace Drupal\libraries\ExternalLibrary\Exception;
 
-use Drupal\libraries\ExternalLibrary\LocalLibraryInterface;
+use Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface;
 use Drupal\libraries\ExternalLibrary\Utility\LibraryAccessorTrait;
 use Exception;
 
@@ -21,7 +21,7 @@ class LibraryNotInstalledException extends \RuntimeException {
   /**
    * Constructs a library exception.
    *
-   * @param \Drupal\libraries\ExternalLibrary\LocalLibraryInterface $library
+   * @param \Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface $library
    *   The library that is not installed.
    * @param string $message
    *   (optional) The exception message.
