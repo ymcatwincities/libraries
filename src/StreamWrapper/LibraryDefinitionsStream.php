@@ -8,7 +8,6 @@
 namespace Drupal\libraries\StreamWrapper;
 
 use Drupal\Core\StreamWrapper\LocalStream;
-use Drupal\Core\StreamWrapper\StreamWrapperInterface;
 
 /**
  * Provides a stream wrapper for library definitions.

@@ -1,4 +1,11 @@
 {
   "id": "test_asset_library",
-  "class": "Drupal\\libraries\\ExternalLibrary\\Asset\\AssetLibrary"
+  "class": "Drupal\\libraries\\ExternalLibrary\\Asset\\AssetLibrary",
+  "remote_url": "http://example.com",
+  "css": {
+    "example.css": []
+  },
+  "js": {
+    "example.js": []
+  }
 }

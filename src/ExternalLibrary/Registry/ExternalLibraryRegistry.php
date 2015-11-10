@@ -7,9 +7,11 @@
 
 namespace Drupal\libraries\ExternalLibrary\Registry;
 
+use Drupal\Component\Plugin\Factory\FactoryInterface;
 use Drupal\Component\Serialization\SerializationInterface;
 use Drupal\libraries\ExternalLibrary\Exception\LibraryClassNotFoundException;
 use Drupal\libraries\ExternalLibrary\Exception\LibraryDefinitionNotFoundException;
+use Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface;
 
 /**
  * Provides an implementation of a registry of external libraries.
@@ -27,13 +29,26 @@ class ExternalLibraryRegistry implements ExternalLibraryRegistryInterface {
   protected $serializer;
 
   /**
+   * The library locator factory.
+   *
+   * @var \Drupal\Component\Plugin\Factory\FactoryInterface
+   */
+  protected $locatorFactory;
+
+  /**
    * Constructs a registry of external libraries.
    *
    * @param \Drupal\Component\Serialization\SerializationInterface $serializer
    *   The serializer for the library definition files.
+   * @param \Drupal\Component\Plugin\Factory\FactoryInterface $locator_factory
+   *   The library locator factory.
    */
-  public function __construct(SerializationInterface $serializer) {
+  public function __construct(
+    SerializationInterface $serializer,
+    FactoryInterface $locator_factory
+  ) {
     $this->serializer = $serializer;
+    $this->locatorFactory = $locator_factory;
   }
 
   /**
@@ -45,7 +60,14 @@ class ExternalLibraryRegistry implements ExternalLibraryRegistryInterface {
     }
     $definition = $this->getDefinition($id);
     $class = $this->getClass($id, $definition);
-    return $class::create($id, $definition);
+    $library = $class::create($id, $definition);
+
+    // @todo Dispatch an event to provide loose coupling
+    if ($library instanceof LocalLibraryInterface) {
+      $library->getLocator($this->locatorFactory)->locate($library);
+    }
+
+    return $library;
   }
 
   /**

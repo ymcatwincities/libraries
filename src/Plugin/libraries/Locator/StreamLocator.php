@@ -80,7 +80,7 @@ class StreamLocator implements LocatorInterface, ContainerFactoryPluginInterface
   public function locate(LocalLibraryInterface $library) {
     $path = $this->fileSystemHelper->realpath($this->getUri($library));
     if (is_dir($path) && is_readable($path)) {
-      $library->setLibraryPath($path);
+      $library->setLocalPath($path);
     }
     else {
       $library->setUninstalled();

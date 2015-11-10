@@ -8,12 +8,11 @@
 namespace Drupal\libraries\StreamWrapper;
 
 use Drupal\Core\StreamWrapper\LocalStream;
-use Drupal\Core\StreamWrapper\StreamWrapperInterface;
 
 /**
  * Provides a stream wrapper for PHP file libraries.
  *
- * Can be used with the 'php-file-library://' scheme, for example
+ * Can be used with the 'php-file://' scheme, for example
  * 'php-file-library://guzzle/src/functions_include.php'.
  */
 class PhpLibraryFilesStream extends LocalStream {

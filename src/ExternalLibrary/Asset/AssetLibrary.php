@@ -8,14 +8,23 @@
 namespace Drupal\libraries\ExternalLibrary\Asset;
 
 use Drupal\libraries\ExternalLibrary\ExternalLibraryTrait;
+use Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface;
+use Drupal\libraries\ExternalLibrary\Local\LocalLibraryTrait;
+use Drupal\libraries\ExternalLibrary\Remote\RemoteLibraryInterface;
+use Drupal\libraries\ExternalLibrary\Remote\RemoteLibraryTrait;
 
 /**
  * Provides a base asset library implementation.
  */
-class AssetLibrary implements AssetLibraryInterface {
+class AssetLibrary implements AssetLibraryInterface, LocalLibraryInterface, RemoteLibraryInterface {
 
-  use ExternalLibraryTrait;
-  use SingleAssetLibraryTrait;
+  use
+    ExternalLibraryTrait,
+    LocalLibraryTrait,
+    RemoteLibraryTrait,
+    SingleAssetLibraryTrait,
+    LocalRemoteAssetTrait
+  ;
 
   /**
    * Construct an external library.
@@ -28,23 +37,22 @@ class AssetLibrary implements AssetLibraryInterface {
   public function __construct($id, array $definition) {
     $this->id = (string) $id;
     // @todo Split this into proper properties.
-    $this->definition = $definition;
+    if (isset($definition['remote_url'])) {
+      $this->remoteUrl = $definition['remote_url'];
+    }
+    if (isset($definition['css'])) {
+      $this->cssAssets = $definition['css'];
+    }
+    if (isset($definition['js'])) {
+      $this->jsAssets = $definition['js'];
+    }
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getCssAssets() {
-    // @todo
-    return [];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getJsAssets() {
-    // @todo
-    return [];
+  public static function create($id, array $definition) {
+    return new static($id, $definition);
   }
 
 }

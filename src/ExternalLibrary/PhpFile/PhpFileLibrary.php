@@ -71,7 +71,7 @@ class PhpFileLibrary implements PhpFileLibraryInterface {
     }
 
     foreach ($this->files as $file) {
-      yield $this->getLibraryPath() . DIRECTORY_SEPARATOR . $file;
+      yield $this->getLocalPath() . DIRECTORY_SEPARATOR . $file;
     }
   }
 

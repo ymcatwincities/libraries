@@ -57,18 +57,4 @@ trait ExternalLibraryTrait {
     return [];
   }
 
-  /**
-   * Creates an instance of the library from its definition.
-   *
-   * @param string $id
-   *   The library ID.
-   * @param array $definition
-   *   The library definition array parsed from the definition JSON file.
-   *
-   * @return static
-   */
-  public static function create($id, array $definition) {
-    return new static($id, $definition);
-  }
-
 }

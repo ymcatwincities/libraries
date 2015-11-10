@@ -32,12 +32,16 @@ trait SingleAssetLibraryTrait {
    * @todo Document the return value.
    */
   public function getAttachableAssetLibraries() {
-    return [$this->getId() => [
-      'version' => $this->getVersion(),
-      'css' => $this->getCssAssets(),
-      'js' => $this->getJsAssets(),
-      'dependencies' => $this->processDependencies($this->getDependencies()),
-    ]];
+    $libraries = [];
+    if ($this->canBeAttached()) {
+      $libraries[$this->getId()] = [
+        'version' => $this->getVersion(),
+        'css' => $this->getCssAssets(),
+        'js' => $this->getJsAssets(),
+        'dependencies' => $this->processDependencies($this->getDependencies()),
+      ];
+    }
+    return $libraries;
   }
 
   /**
@@ -55,6 +59,7 @@ trait SingleAssetLibraryTrait {
     $attachable_dependency_ids = [];
     foreach ($dependencies as $dependency) {
       if (!$dependency instanceof AssetLibraryInterface) {
+        // @todo Somehow integrate this with canBeAttached().
         /** @var \Drupal\libraries\ExternalLibrary\ExternalLibraryInterface $this */
         throw new InvalidLibraryDependencyException($this, $dependency);
       }
@@ -66,6 +71,14 @@ trait SingleAssetLibraryTrait {
     }
     return $attachable_dependency_ids;
   }
+
+  /**
+   * Checks whether this library can be attached.
+   *
+   * @return bool
+   *   TRUE if the library can be attached; FALSE otherwise.
+   */
+  abstract protected function canBeAttached();
 
   /**
    * Returns the ID of the library.

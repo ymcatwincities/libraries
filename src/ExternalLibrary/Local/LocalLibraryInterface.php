@@ -17,10 +17,11 @@ use Drupal\libraries\ExternalLibrary\ExternalLibraryInterface;
  * library files can be found in the filesystem a library is considered
  * installed and its library path can be retrieved.
  *
- * A library not being installed can have a different meaning depending on the
- * library type. A PHP file library. for example, can not be loaded if it is not
- * installed whereas an asset library can be loaded from a remote source if one
- * is provided and that is permitted by the configuration.
+ * Because determining whether or not the library is available locally is not
+ * the responsibility of the library itself, but of a designated locator, this
+ * interface declares setter methods, as well.
+ *
+ * @see \Drupal\libraries\ExternalLibrary\Local\LocatorInterface
  */
 interface LocalLibraryInterface extends ExternalLibraryInterface {
 
@@ -42,31 +43,31 @@ interface LocalLibraryInterface extends ExternalLibraryInterface {
    * @return $this
    *
    * @see \Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface::isInstalled()
-   * @see \Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface::setLibraryPath()
+   * @see \Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface::setLocalPath()
    */
   public function setUninstalled();
 
   /**
-   * Gets the path to the library.
+   * Gets the local path to the library.
    *
    * @return string
    *   The absolute path to the library on the filesystem.
    *
    * @throws \Drupal\libraries\ExternalLibrary\Exception\LibraryNotInstalledException
    *
-   * @see \Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface::setLibraryPath()
+   * @see \Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface::setLocalPath()
    */
-  public function getLibraryPath();
+  public function getLocalPath();
 
   /**
-   * Sets the library path of the library.
+   * Sets the local path of the library.
    *
    * @param string $path
    *   The path to the library.
    *
-   * @see \Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface::getLibraryPath()
+   * @see \Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface::getLocalPath()
    */
-  public function setLibraryPath($path);
+  public function setLocalPath($path);
 
   /**
    * Gets the locator of this library using the locator factory.

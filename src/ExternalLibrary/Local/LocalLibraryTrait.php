@@ -74,9 +74,9 @@ trait LocalLibraryTrait {
    *
    * @throws \Drupal\libraries\ExternalLibrary\Exception\LibraryNotInstalledException
    *
-   * @see \Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface::getLibraryPath()
+   * @see \Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface::getLocalPath()
    */
-  public function getLibraryPath() {
+  public function getLocalPath() {
     if (!$this->isInstalled()) {
       /** @var \Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface $this */
       throw new LibraryNotInstalledException($this);
@@ -91,9 +91,9 @@ trait LocalLibraryTrait {
    * @param string $path
    *   The path to the library.
    *
-   * @see \Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface::getLibraryPath()
+   * @see \Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface::getLocalPath()
    */
-  public function setLibraryPath($path) {
+  public function setLocalPath($path) {
     $this->installed = TRUE;
     $this->libraryPath = (string) $path;
 
