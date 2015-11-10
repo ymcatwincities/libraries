@@ -19,6 +19,13 @@ use Drupal\Core\Site\Settings;
 abstract class ExternalLibraryKernelTestBase extends CoreKernelTestBase {
 
   /**
+   * The absolute path to the Libraries API module.
+   *
+   * @var string
+   */
+  protected $modulePath;
+
+  /**
    * {@inheritdoc}
    */
   protected function setUp() {
@@ -27,13 +34,13 @@ abstract class ExternalLibraryKernelTestBase extends CoreKernelTestBase {
     /** @var \Drupal\Core\Extension\ModuleHandlerInterface $module_handler */
     $root = $this->container->get('app.root');
     $module_handler = $this->container->get('module_handler');
-    $module_path = $module_handler->getModule('libraries')->getPath();
+    $this->modulePath = "$root/" . $module_handler->getModule('libraries')->getPath();
 
     $this->installConfig('libraries');
     /** @var \Drupal\Core\Config\ConfigFactoryInterface $config_factory */
     $config_factory = $this->container->get('config.factory');
     $config_factory->getEditable('libraries.settings')
-      ->set('library_definitions.local.path', "$root/$module_path/tests/library_definitions")
+      ->set('library_definitions.local.path', "{$this->modulePath}/tests/library_definitions")
       ->save();
   }
 

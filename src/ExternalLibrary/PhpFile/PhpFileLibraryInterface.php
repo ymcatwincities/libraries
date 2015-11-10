@@ -19,7 +19,7 @@ interface PhpFileLibraryInterface extends LocalLibraryInterface {
   /**
    * Returns the PHP files of this library.
    *
-   * @return string[]|\Generator
+   * @return string[]
    *   An array of absolute file paths of PHP files.
    */
   public function getPhpFiles();

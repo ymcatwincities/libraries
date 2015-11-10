@@ -70,9 +70,11 @@ class PhpFileLibrary implements PhpFileLibraryInterface {
       throw new LibraryNotInstalledException($this);
     }
 
+    $processed_files = [];
     foreach ($this->files as $file) {
-      yield $this->getLocalPath() . DIRECTORY_SEPARATOR . $file;
+      $processed_files[] = $this->getLocalPath() . DIRECTORY_SEPARATOR . $file;
     }
+    return $processed_files;
   }
 
   /**
