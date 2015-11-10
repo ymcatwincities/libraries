@@ -7,6 +7,9 @@
 
 namespace Drupal\Tests\libraries\Kernel\ExternalLibrary\Asset;
 
+use Drupal\libraries\ExternalLibrary\Asset\AssetLibrary;
+use Drupal\libraries\ExternalLibrary\Exception\LibraryClassNotFoundException;
+use Drupal\libraries\ExternalLibrary\Exception\LibraryDefinitionNotFoundException;
 use Drupal\Tests\libraries\Kernel\ExternalLibraryKernelTestBase;
 
 /**
@@ -38,6 +41,32 @@ class AssetLibraryTest extends ExternalLibraryKernelTestBase {
     parent::setUp();
 
     $this->libraryDiscovery = $this->container->get('library.discovery');
+  }
+
+  /**
+   * Tests that library metadata is correctly gathered.
+   */
+  public function testMetadata() {
+    try {
+      /** @var \Drupal\libraries\ExternalLibrary\Asset\AssetLibrary $library */
+      $library = $this->externalLibraryRegistry->getLibrary('test_asset_library');
+      $this->assertInstanceOf(AssetLibrary::class, $library);
+
+      $this->assertEquals('test_asset_library', $library->getId());
+      $expected = ['test_asset_library' => [
+        'version' => 1.0,
+        'css' => ['base' => ['http://example.com/example.css' => []]],
+        'js' => ['http://example.com/example.js' => []],
+        'dependencies' => [],
+      ]];
+      $this->assertEquals($expected, $library->getAttachableAssetLibraries());
+    }
+    catch (LibraryClassNotFoundException $exception) {
+      $this->fail();
+    }
+    catch (LibraryDefinitionNotFoundException $exception) {
+      $this->fail();
+    }
   }
 
   /**

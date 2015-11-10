@@ -7,7 +7,6 @@
 
 namespace Drupal\Tests\libraries\Kernel\ExternalLibrary\PhpFile;
 
-use Drupal\Core\Asset\Exception\LibraryDefinitionMissingLicenseException;
 use Drupal\libraries\ExternalLibrary\Exception\LibraryClassNotFoundException;
 use Drupal\libraries\ExternalLibrary\Exception\LibraryDefinitionNotFoundException;
 use Drupal\libraries\ExternalLibrary\PhpFile\PhpFileLibrary;
@@ -33,20 +32,12 @@ class PhpFileLibraryTest extends ExternalLibraryKernelTestBase {
   protected $externalLibraryManager;
 
   /**
-   * The external library registry.
-   *
-   * @var \Drupal\libraries\ExternalLibrary\Registry\ExternalLibraryRegistryInterface
-   */
-  protected $externalLibraryRegistry;
-
-  /**
    * {@inheritdoc}
    */
   protected function setUp() {
     parent::setUp();
 
     $this->externalLibraryManager = $this->container->get('libraries.manager');
-    $this->externalLibraryRegistry = $this->container->get('libraries.registry');
 
     $this->container->set('stream_wrapper.php_library_files', new TestPhpLibraryFilesStream());
   }

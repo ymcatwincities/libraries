@@ -7,16 +7,19 @@
 
 namespace Drupal\Tests\libraries\Kernel;
 
-use Drupal\Component\FileCache\ApcuFileCacheBackend;
-use Drupal\Component\FileCache\FileCache;
-use Drupal\Component\FileCache\FileCacheFactory;
-use Drupal\KernelTests\KernelTestBase as CoreKernelTestBase;
-use Drupal\Core\Site\Settings;
+use Drupal\KernelTests\KernelTestBase;
 
 /**
  * Provides an improved version of the core kernel test base class.
  */
-abstract class ExternalLibraryKernelTestBase extends CoreKernelTestBase {
+abstract class ExternalLibraryKernelTestBase extends KernelTestBase {
+
+  /**
+   * The external library registry.
+   *
+   * @var \Drupal\libraries\ExternalLibrary\Registry\ExternalLibraryRegistryInterface
+   */
+  protected $externalLibraryRegistry;
 
   /**
    * The absolute path to the Libraries API module.
@@ -30,6 +33,8 @@ abstract class ExternalLibraryKernelTestBase extends CoreKernelTestBase {
    */
   protected function setUp() {
     parent::setUp();
+
+    $this->externalLibraryRegistry = $this->container->get('libraries.registry');
 
     /** @var \Drupal\Core\Extension\ModuleHandlerInterface $module_handler */
     $root = $this->container->get('app.root');

@@ -70,6 +70,28 @@ trait LocalRemoteAssetTrait {
   }
 
   /**
+   * Gets the prefix to prepend to file paths.
+   *
+   * For local libraries this is the library path, for remote libraries this is
+   * the remote URL.
+   *
+   * @return string
+   *   The path prefix.
+   */
+  protected function getPathPrefix() {
+    /** @var \Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface|\Drupal\libraries\ExternalLibrary\Remote\RemoteLibraryInterface $this */
+    if ($this->isInstalled()) {
+      return $this->getLocalPath();
+    }
+    elseif ($this->hasRemoteUrl()) {
+      return $this->getRemoteUrl();
+    }
+    else {
+      // @todo Throw an exception.
+    }
+  }
+
+  /**
    * Gets the CSS assets attached to this library.
    *
    * @return array
@@ -84,8 +106,15 @@ trait LocalRemoteAssetTrait {
    * @see \Drupal\libraries\ExternalLibrary\Asset\SingleAssetLibraryTrait::getCssAssets()
    */
   protected function getCssAssets() {
-    // @todo Process the paths.
-    return $this->cssAssets;
+    // @todo Consider somehow caching the processed information.
+    $processed_assets = [];
+    foreach ($this->cssAssets as $category => $category_assets) {
+      // @todo Somehow consolidate this with getJsAssets().
+      foreach ($category_assets as $filename => $options) {
+        $processed_assets[$category][$this->getPathPrefix() . '/' . $filename] = $options;
+      }
+    }
+    return $processed_assets;
   }
 
   /**
@@ -99,8 +128,13 @@ trait LocalRemoteAssetTrait {
    * @see \Drupal\libraries\ExternalLibrary\Asset\SingleAssetLibraryTrait::getJsAssets()
    */
   protected function getJsAssets() {
-    // @todo Process the paths.
-    return $this->jsAssets;
+    // @todo Consider somehow caching the processed information.
+    $processed_assets = [];
+    // @todo Somehow consolidate this with getCssAssets().
+    foreach ($this->jsAssets as $filename => $options) {
+      $processed_assets[$this->getPathPrefix() . '/' . $filename] = $options;
+    }
+    return $processed_assets;
   }
 
 }

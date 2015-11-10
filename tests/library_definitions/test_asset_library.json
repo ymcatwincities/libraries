@@ -3,7 +3,9 @@
   "class": "Drupal\\libraries\\ExternalLibrary\\Asset\\AssetLibrary",
   "remote_url": "http://example.com",
   "css": {
-    "example.css": []
+    "base": {
+      "example.css": []
+    }
   },
   "js": {
     "example.js": []
