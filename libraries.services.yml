@@ -23,6 +23,10 @@ services:
     arguments: ['@config.factory']
     tags:
       - { name: stream_wrapper, scheme: 'library-definitions' }
+  stream_wrapper.asset_libraries:
+    class: Drupal\libraries\StreamWrapper\AssetLibrariesStream
+    tags:
+      - { name: stream_wrapper, scheme: 'asset' }
   stream_wrapper.php_library_files:
     class: Drupal\libraries\StreamWrapper\PhpLibraryFilesStream
     tags:
