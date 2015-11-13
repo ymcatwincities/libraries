@@ -39,6 +39,13 @@ class StreamLocator implements LocatorInterface, ContainerFactoryPluginInterface
   protected $fileSystemHelper;
 
   /**
+   * The app root.
+   *
+   * @var string
+   */
+  protected $appRoot;
+
+  /**
    * The scheme of the stream wrapper.
    *
    * @var string
@@ -50,11 +57,14 @@ class StreamLocator implements LocatorInterface, ContainerFactoryPluginInterface
    *
    * @param \Drupal\Core\File\FileSystemInterface $file_system_helper
    *   The file system helper.
+   * @param string $app_root
+   *   The app root.
    * @param string $scheme
    *   The scheme of the stream wrapper.
    */
-  public function __construct(FileSystemInterface $file_system_helper, $scheme) {
+  public function __construct(FileSystemInterface $file_system_helper, $app_root, $scheme) {
     $this->fileSystemHelper = $file_system_helper;
+    $this->appRoot = (string) $app_root;
     $this->scheme = (string) $scheme;
   }
 
@@ -65,7 +75,7 @@ class StreamLocator implements LocatorInterface, ContainerFactoryPluginInterface
     if (!isset($configuration['scheme'])) {
       throw new MissingPluginConfigurationException($plugin_id, $plugin_definition, $configuration, 'scheme');
     }
-    return new static($container->get('file_system'), $configuration['scheme']);
+    return new static($container->get('file_system'), $container->get('app.root'), $configuration['scheme']);
   }
 
 
@@ -79,7 +89,13 @@ class StreamLocator implements LocatorInterface, ContainerFactoryPluginInterface
    */
   public function locate(LocalLibraryInterface $library) {
     $path = $this->fileSystemHelper->realpath($this->getUri($library));
-    if (is_dir($path) && is_readable($path)) {
+
+    if ($path && is_dir($path) && is_readable($path)) {
+      // Set a path relative to the app root.
+      assert('strpos($path, $this->appRoot . "/") === 0', "Path: $path");
+      $path = str_replace($this->appRoot . '/', '', $path);
+      assert('$path[0] !== "/"');
+
       $library->setLocalPath($path);
     }
     else {

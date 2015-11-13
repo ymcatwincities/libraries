@@ -10,6 +10,7 @@ namespace Drupal\Tests\libraries\Kernel\ExternalLibrary\Asset;
 use Drupal\libraries\ExternalLibrary\Asset\AssetLibrary;
 use Drupal\libraries\ExternalLibrary\Exception\LibraryClassNotFoundException;
 use Drupal\libraries\ExternalLibrary\Exception\LibraryDefinitionNotFoundException;
+use Drupal\Tests\libraries\Kernel\ExternalLibrary\TestLibraryFilesStream;
 use Drupal\Tests\libraries\Kernel\ExternalLibraryKernelTestBase;
 
 /**
@@ -70,7 +71,7 @@ class AssetLibraryTest extends ExternalLibraryKernelTestBase {
   }
 
   /**
-   * Tests that an external asset library is registered as a core asset library.
+   * Tests that a remote asset library is registered as a core asset library.
    *
    * @see \Drupal\libraries\Extension\Extension
    * @see \Drupal\libraries\Extension\ExtensionHandler
@@ -80,7 +81,7 @@ class AssetLibraryTest extends ExternalLibraryKernelTestBase {
    * @see \Drupal\libraries\ExternalLibrary\ExternalLibraryTrait
    * @see \Drupal\libraries\ExternalLibrary\Registry\ExternalLibraryRegistry
    */
-  public function testAssetLibrary() {
+  public function testAssetLibraryRemote() {
     $library = $this->libraryDiscovery->getLibraryByName('libraries', 'test_asset_library');
     $expected = [
       'version' => '1.0',
@@ -96,6 +97,43 @@ class AssetLibraryTest extends ExternalLibraryKernelTestBase {
         'type' => 'external',
         'data' => 'http://example.com/example.js',
         'version' => '1.0',
+      ]],
+      'dependencies' => [],
+      'license' => [
+        'name' => 'GNU-GPL-2.0-or-later',
+        'url' => 'https://www.drupal.org/licensing/faq',
+        'gpl-compatible' => TRUE,
+      ]
+    ];
+    $this->assertEquals($expected, $library);
+  }
+
+  /**
+   * Tests that a local asset library is registered as a core asset library.
+   */
+  public function testAssetLibraryLocal() {
+    $this->container->set('stream_wrapper.asset_libraries', new TestLibraryFilesStream(
+      $this->container->get('module_handler'),
+      $this->container->get('string_translation'),
+      'assets/vendor'
+    ));
+    $this->libraryDiscovery->clearCachedDefinitions();
+    $library = $this->libraryDiscovery->getLibraryByName('libraries', 'test_asset_library');
+    $expected = [
+      'version' => '1.0',
+      'css' => [[
+        'weight' => -200,
+        'group' => 0,
+        'type' => 'file',
+        'data' => $this->modulePath . '/tests/assets/vendor/test_asset_library/example.css',
+        'version' => '1.0',
+      ]],
+      'js' => [[
+        'group' => -100,
+        'type' => 'file',
+        'data' => $this->modulePath . '/tests/assets/vendor/test_asset_library/example.js',
+        'version' => '1.0',
+        'minified' => FALSE,
       ]],
       'dependencies' => [],
       'license' => [

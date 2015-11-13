@@ -26,8 +26,8 @@ services:
     class: Drupal\libraries\StreamWrapper\AssetLibrariesStream
     tags:
       - { name: stream_wrapper, scheme: 'asset' }
-  stream_wrapper.php_library_files:
-    class: Drupal\libraries\StreamWrapper\PhpLibraryFilesStream
+  stream_wrapper.php_file_libraries:
+    class: Drupal\libraries\StreamWrapper\PhpFileLibrariesStream
     tags:
       - { name: stream_wrapper, scheme: 'php-file' }
 

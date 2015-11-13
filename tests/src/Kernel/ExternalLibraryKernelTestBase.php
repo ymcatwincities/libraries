@@ -37,9 +37,8 @@ abstract class ExternalLibraryKernelTestBase extends KernelTestBase {
     $this->externalLibraryRegistry = $this->container->get('libraries.registry');
 
     /** @var \Drupal\Core\Extension\ModuleHandlerInterface $module_handler */
-    $root = $this->container->get('app.root');
     $module_handler = $this->container->get('module_handler');
-    $this->modulePath = "$root/" . $module_handler->getModule('libraries')->getPath();
+    $this->modulePath = $module_handler->getModule('libraries')->getPath();
 
     $this->installConfig('libraries');
     /** @var \Drupal\Core\Config\ConfigFactoryInterface $config_factory */

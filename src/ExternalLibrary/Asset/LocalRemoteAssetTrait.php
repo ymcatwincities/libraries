@@ -81,7 +81,11 @@ trait LocalRemoteAssetTrait {
   protected function getPathPrefix() {
     /** @var \Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface|\Drupal\libraries\ExternalLibrary\Remote\RemoteLibraryInterface $this */
     if ($this->isInstalled()) {
-      return $this->getLocalPath();
+      // LocalLibraryInterface::getLocalPath() returns the path relative to the
+      // app root. In order for the core core asset system to register the path
+      // as relative to the app root, a leading slash is required.
+      /** @see \Drupal\Core\Asset\LibraryDiscoveryParser::buildByExtension() */
+      return '/' . $this->getLocalPath();
     }
     elseif ($this->hasRemoteUrl()) {
       return $this->getRemoteUrl();

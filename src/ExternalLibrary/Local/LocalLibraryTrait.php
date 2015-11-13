@@ -32,11 +32,11 @@ trait LocalLibraryTrait {
   protected $installed = FALSE;
 
   /**
-   * The absolute path to the library on the filesystem.
+   * The local path to the library relative to the app root.
    *
    * @var string
    */
-  protected $libraryPath;
+  protected $localPath;
 
   /**
    * Checks whether the library is installed.
@@ -70,7 +70,7 @@ trait LocalLibraryTrait {
    * Gets the path to the library.
    *
    * @return string
-   *   The absolute path to the library on the filesystem.
+   *   The path to the library relative to the app root.
    *
    * @throws \Drupal\libraries\ExternalLibrary\Exception\LibraryNotInstalledException
    *
@@ -82,7 +82,7 @@ trait LocalLibraryTrait {
       throw new LibraryNotInstalledException($this);
     }
 
-    return $this->libraryPath;
+    return $this->localPath;
   }
 
   /**
@@ -95,9 +95,10 @@ trait LocalLibraryTrait {
    */
   public function setLocalPath($path) {
     $this->installed = TRUE;
-    $this->libraryPath = (string) $path;
+    $this->localPath = (string) $path;
 
-    assert('$this->libraryPath !== ""');
+    assert('$this->localPath !== ""');
+    assert('$this->localPath[0] !== "/"');
   }
 
 }

@@ -39,7 +39,7 @@ class AssetLibrariesStream extends LocalStream {
    */
   public function getDirectoryPath() {
     // @todo Provide support for site-specific directories, etc.
-    return 'sites/all/assets';
+    return 'sites/all/assets/vendor';
   }
 
 }

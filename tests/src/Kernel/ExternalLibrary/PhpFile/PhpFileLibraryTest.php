@@ -10,6 +10,7 @@ namespace Drupal\Tests\libraries\Kernel\ExternalLibrary\PhpFile;
 use Drupal\libraries\ExternalLibrary\Exception\LibraryClassNotFoundException;
 use Drupal\libraries\ExternalLibrary\Exception\LibraryDefinitionNotFoundException;
 use Drupal\libraries\ExternalLibrary\PhpFile\PhpFileLibrary;
+use Drupal\Tests\libraries\Kernel\ExternalLibrary\TestLibraryFilesStream;
 use Drupal\Tests\libraries\Kernel\ExternalLibraryKernelTestBase;
 
 /**
@@ -39,7 +40,11 @@ class PhpFileLibraryTest extends ExternalLibraryKernelTestBase {
 
     $this->externalLibraryManager = $this->container->get('libraries.manager');
 
-    $this->container->set('stream_wrapper.php_library_files', new TestPhpLibraryFilesStream());
+    $this->container->set('stream_wrapper.php_file_libraries', new TestLibraryFilesStream(
+      $this->container->get('module_handler'),
+      $this->container->get('string_translation'),
+      'libraries'
+    ));
   }
 
   /**

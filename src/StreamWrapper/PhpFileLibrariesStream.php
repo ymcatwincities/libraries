@@ -15,7 +15,7 @@ use Drupal\Core\StreamWrapper\LocalStream;
  * Can be used with the 'php-file://' scheme, for example
  * 'php-file-library://guzzle/src/functions_include.php'.
  */
-class PhpLibraryFilesStream extends LocalStream {
+class PhpFileLibrariesStream extends LocalStream {
 
   use LocalHiddenStreamTrait;
   use PrivateStreamTrait;
