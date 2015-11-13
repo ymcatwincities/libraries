@@ -2,26 +2,24 @@
 
 /**
  * @file
- * Contains \Drupal\libraries\ExternalLibrary\ExternalLibraryManager.
+ * Contains \Drupal\libraries\ExternalLibrary\LibraryManager.
  */
 
 namespace Drupal\libraries\ExternalLibrary;
-use Drupal\Component\Plugin\Factory\FactoryInterface;
 use Drupal\libraries\Extension\ExtensionHandlerInterface;
-use Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface;
 use Drupal\libraries\ExternalLibrary\PhpFile\PhpFileLibraryInterface;
 use Drupal\libraries\ExternalLibrary\PhpFile\PhpFileLoaderInterface;
-use Drupal\libraries\ExternalLibrary\Registry\ExternalLibraryRegistryInterface;
+use Drupal\libraries\ExternalLibrary\Registry\LibraryRegistryInterface;
 
 /**
  * Provides a manager for external libraries.
  */
-class ExternalLibraryManager implements ExternalLibraryManagerInterface {
+class LibraryManager implements LibraryManagerInterface {
 
   /**
    * The library registry.
    *
-   * @var \Drupal\libraries\ExternalLibrary\Registry\ExternalLibraryRegistryInterface
+   * @var \Drupal\libraries\ExternalLibrary\Registry\LibraryRegistryInterface
    */
   protected $registry;
 
@@ -42,7 +40,7 @@ class ExternalLibraryManager implements ExternalLibraryManagerInterface {
   /**
    * Constructs an external library manager.
    *
-   * @param \Drupal\libraries\ExternalLibrary\Registry\ExternalLibraryRegistryInterface $registry
+   * @param \Drupal\libraries\ExternalLibrary\Registry\LibraryRegistryInterface $registry
    *   The library registry.
    * @param \Drupal\libraries\Extension\ExtensionHandlerInterface $extension_handler
    *   The extension handler.
@@ -50,7 +48,7 @@ class ExternalLibraryManager implements ExternalLibraryManagerInterface {
    *   The PHP file loader.
    */
   public function __construct(
-    ExternalLibraryRegistryInterface $registry,
+    LibraryRegistryInterface $registry,
     ExtensionHandlerInterface $extension_handler,
     PhpFileLoaderInterface $php_file_loader
   ) {

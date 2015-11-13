@@ -7,8 +7,6 @@
 
 namespace Drupal\libraries\ExternalLibrary\Local;
 
-use Drupal\libraries\ExternalLibrary\ExternalLibraryInterface;
-
 /**
  * Provides an interface for library locators.
  *

@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\libraries\ExternalLibrary\Registry\ExternalLibraryRegistryInterface.
+ * Contains \Drupal\libraries\ExternalLibrary\Registry\LibraryRegistryInterface.
  */
 
 namespace Drupal\libraries\ExternalLibrary\Registry;
@@ -11,7 +11,7 @@ namespace Drupal\libraries\ExternalLibrary\Registry;
 /**
  * Provides an interface for library registries.
  */
-interface ExternalLibraryRegistryInterface {
+interface LibraryRegistryInterface {
 
   /**
    * Gets a library by its ID.
@@ -19,7 +19,7 @@ interface ExternalLibraryRegistryInterface {
    * @param string $id
    *   The library ID.
    *
-   * @return \Drupal\libraries\ExternalLibrary\ExternalLibraryInterface
+   * @return \Drupal\libraries\ExternalLibrary\LibraryInterface
    *   The library.
    *
    * @throws \Drupal\libraries\ExternalLibrary\Exception\LibraryClassNotFoundException

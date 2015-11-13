@@ -8,7 +8,7 @@
 namespace Drupal\libraries\ExternalLibrary\Local;
 
 use Drupal\Component\Plugin\Factory\FactoryInterface;
-use Drupal\libraries\ExternalLibrary\ExternalLibraryInterface;
+use Drupal\libraries\ExternalLibrary\LibraryInterface;
 
 /**
  * Provides an interface for local libraries.
@@ -23,7 +23,7 @@ use Drupal\libraries\ExternalLibrary\ExternalLibraryInterface;
  *
  * @see \Drupal\libraries\ExternalLibrary\Local\LocatorInterface
  */
-interface LocalLibraryInterface extends ExternalLibraryInterface {
+interface LocalLibraryInterface extends LibraryInterface {
 
   /**
    * Checks whether the library is installed.

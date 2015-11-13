@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\libraries\ExternalLibrary\ExternalLibraryManagerInterface.
+ * Contains \Drupal\libraries\ExternalLibrary\LibraryManagerInterface.
  */
 
 namespace Drupal\libraries\ExternalLibrary;
@@ -11,7 +11,7 @@ namespace Drupal\libraries\ExternalLibrary;
 /**
  * Provides an interface for external library managers.
  */
-interface ExternalLibraryManagerInterface {
+interface LibraryManagerInterface {
 
   /**
    * Gets the list of libraries that are required by enabled extensions.
@@ -19,7 +19,7 @@ interface ExternalLibraryManagerInterface {
    * Modules, themes, and installation profiles can declare library dependencies
    * in their info files.
    *
-   * @return \Drupal\libraries\ExternalLibrary\ExternalLibraryInterface[]|\Generator
+   * @return \Drupal\libraries\ExternalLibrary\LibraryInterface[]|\Generator
    *   An array of libraries keyed by their ID.
    *
    * @todo Expand the documentation.

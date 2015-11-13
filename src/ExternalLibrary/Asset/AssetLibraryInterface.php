@@ -7,7 +7,7 @@
 
 namespace Drupal\libraries\ExternalLibrary\Asset;
 
-use Drupal\libraries\ExternalLibrary\ExternalLibraryInterface;
+use Drupal\libraries\ExternalLibrary\LibraryInterface;
 
 /**
  * Provides an interface for library with assets.
@@ -16,7 +16,7 @@ use Drupal\libraries\ExternalLibrary\ExternalLibraryInterface;
  *
  * @todo Explain
  */
-interface AssetLibraryInterface extends ExternalLibraryInterface {
+interface AssetLibraryInterface extends LibraryInterface {
 
   /**
    * Returns a core asset library array structure for this library.

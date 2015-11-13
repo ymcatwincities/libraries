@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\libraries\ExternalLibrary\Registry\ExternalLibraryRegistry.
+ * Contains \Drupal\libraries\ExternalLibrary\Registry\LibraryRegistry.
  */
 
 namespace Drupal\libraries\ExternalLibrary\Registry;
@@ -19,7 +19,7 @@ use Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface;
  * @todo Allow for JavaScript CDN's, Packagist, etc. to act as library
  *   registries.
  */
-class ExternalLibraryRegistry implements ExternalLibraryRegistryInterface {
+class LibraryRegistry implements LibraryRegistryInterface {
 
   /**
    * The serializer for the library definition files.
@@ -118,7 +118,7 @@ class ExternalLibraryRegistry implements ExternalLibraryRegistryInterface {
    * @param array $definition
    *   The library definition array parsed from the definition JSON file.
    *
-   * @return string|\Drupal\libraries\ExternalLibrary\ExternalLibraryInterface
+   * @return string|\Drupal\libraries\ExternalLibrary\LibraryInterface
    *   The library class.
    *
    * @throws \Drupal\libraries\ExternalLibrary\Exception\LibraryClassNotFoundException

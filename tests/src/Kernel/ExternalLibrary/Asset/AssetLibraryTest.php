@@ -11,14 +11,14 @@ use Drupal\libraries\ExternalLibrary\Asset\AssetLibrary;
 use Drupal\libraries\ExternalLibrary\Exception\LibraryClassNotFoundException;
 use Drupal\libraries\ExternalLibrary\Exception\LibraryDefinitionNotFoundException;
 use Drupal\Tests\libraries\Kernel\ExternalLibrary\TestLibraryFilesStream;
-use Drupal\Tests\libraries\Kernel\ExternalLibraryKernelTestBase;
+use Drupal\Tests\libraries\Kernel\LibraryKernelTestBase;
 
 /**
  * Tests that external asset libraries are registered as core asset libraries.
  *
  * @group libraries
  */
-class AssetLibraryTest extends ExternalLibraryKernelTestBase {
+class AssetLibraryTest extends LibraryKernelTestBase {
 
   /**
    * {@inheritdoc}

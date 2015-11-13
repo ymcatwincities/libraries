@@ -7,7 +7,7 @@
 
 namespace Drupal\libraries\ExternalLibrary\Asset;
 
-use Drupal\libraries\ExternalLibrary\ExternalLibraryTrait;
+use Drupal\libraries\ExternalLibrary\LibraryTrait;
 use Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface;
 use Drupal\libraries\ExternalLibrary\Local\LocalLibraryTrait;
 use Drupal\libraries\ExternalLibrary\Remote\RemoteLibraryInterface;
@@ -19,7 +19,7 @@ use Drupal\libraries\ExternalLibrary\Remote\RemoteLibraryTrait;
 class AssetLibrary implements AssetLibraryInterface, LocalLibraryInterface, RemoteLibraryInterface {
 
   use
-    ExternalLibraryTrait,
+    LibraryTrait,
     LocalLibraryTrait,
     RemoteLibraryTrait,
     SingleAssetLibraryTrait,

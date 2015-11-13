@@ -9,7 +9,7 @@ namespace Drupal\libraries\ExternalLibrary\PhpFile;
 
 use Drupal\Component\Plugin\Factory\FactoryInterface;
 use Drupal\libraries\ExternalLibrary\Exception\LibraryNotInstalledException;
-use Drupal\libraries\ExternalLibrary\ExternalLibraryTrait;
+use Drupal\libraries\ExternalLibrary\LibraryTrait;
 use Drupal\libraries\ExternalLibrary\Local\LocalLibraryTrait;
 
 /**
@@ -17,7 +17,7 @@ use Drupal\libraries\ExternalLibrary\Local\LocalLibraryTrait;
  */
 class PhpFileLibrary implements PhpFileLibraryInterface {
 
-  use ExternalLibraryTrait;
+  use LibraryTrait;
   use LocalLibraryTrait;
 
   /**

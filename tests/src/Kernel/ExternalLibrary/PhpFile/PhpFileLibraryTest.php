@@ -11,14 +11,14 @@ use Drupal\libraries\ExternalLibrary\Exception\LibraryClassNotFoundException;
 use Drupal\libraries\ExternalLibrary\Exception\LibraryDefinitionNotFoundException;
 use Drupal\libraries\ExternalLibrary\PhpFile\PhpFileLibrary;
 use Drupal\Tests\libraries\Kernel\ExternalLibrary\TestLibraryFilesStream;
-use Drupal\Tests\libraries\Kernel\ExternalLibraryKernelTestBase;
+use Drupal\Tests\libraries\Kernel\LibraryKernelTestBase;
 
 /**
  * Tests that the external library manager properly loads PHP file libraries.
  *
  * @group libraries
  */
-class PhpFileLibraryTest extends ExternalLibraryKernelTestBase {
+class PhpFileLibraryTest extends LibraryKernelTestBase {
 
   /**
    * {@inheritdoc}
@@ -28,7 +28,7 @@ class PhpFileLibraryTest extends ExternalLibraryKernelTestBase {
   /**
    * The external library manager.
    *
-   * @var \Drupal\libraries\ExternalLibrary\ExternalLibraryManagerInterface
+   * @var \Drupal\libraries\ExternalLibrary\LibraryManagerInterface
    */
   protected $externalLibraryManager;
 

@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\Tests\libraries\Kernel\KernelTestBase.
+ * Contains \Drupal\Tests\libraries\Kernel\LibraryKernelTestBase.
  */
 
 namespace Drupal\Tests\libraries\Kernel;
@@ -12,12 +12,12 @@ use Drupal\KernelTests\KernelTestBase;
 /**
  * Provides an improved version of the core kernel test base class.
  */
-abstract class ExternalLibraryKernelTestBase extends KernelTestBase {
+abstract class LibraryKernelTestBase extends KernelTestBase {
 
   /**
    * The external library registry.
    *
-   * @var \Drupal\libraries\ExternalLibrary\Registry\ExternalLibraryRegistryInterface
+   * @var \Drupal\libraries\ExternalLibrary\Registry\LibraryRegistryInterface
    */
   protected $externalLibraryRegistry;
 

@@ -7,7 +7,7 @@
 
 namespace Drupal\libraries\ExternalLibrary\Remote;
 
-use Drupal\libraries\ExternalLibrary\ExternalLibraryInterface;
+use Drupal\libraries\ExternalLibrary\LibraryInterface;
 
 /**
  * Provides an interface for remote libraries.
@@ -16,7 +16,7 @@ use Drupal\libraries\ExternalLibrary\ExternalLibraryInterface;
  * not checked whether or not the Drupal site has network access or the remote
  * resource is available.
  */
-interface RemoteLibraryInterface extends ExternalLibraryInterface {
+interface RemoteLibraryInterface extends LibraryInterface {
 
   /**
    * Checks whether the library has a remote URL.

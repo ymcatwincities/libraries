@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\libraries\ExternalLibrary\ExternalLibraryTrait.
+ * Contains \Drupal\libraries\ExternalLibrary\LibraryTrait.
  */
 
 namespace Drupal\libraries\ExternalLibrary;
@@ -10,7 +10,7 @@ namespace Drupal\libraries\ExternalLibrary;
 /**
  * Provides a base external library implementation.
  */
-trait ExternalLibraryTrait {
+trait LibraryTrait {
 
   /**
    * The library ID.
@@ -25,7 +25,7 @@ trait ExternalLibraryTrait {
    * @return string
    *   The library ID. This must be unique among all known libraries.
    *
-   * @see \Drupal\libraries\ExternalLibrary\ExternalLibraryInterface::getId()
+   * @see \Drupal\libraries\ExternalLibrary\LibraryInterface::getId()
    */
   public function getId() {
     return $this->id;
@@ -37,7 +37,7 @@ trait ExternalLibraryTrait {
    * @return string
    *   The version string, for example 1.0, 2.1.4, or 3.0.0-alpha5.
    *
-   * @see \Drupal\libraries\ExternalLibrary\ExternalLibraryInterface::getVersion()
+   * @see \Drupal\libraries\ExternalLibrary\LibraryInterface::getVersion()
    */
   public function getVersion() {
     // @todo Turn into something useful and split into some other trait.
@@ -50,7 +50,7 @@ trait ExternalLibraryTrait {
    * @return array
    *   An array of library IDs of libraries that the library depends on.
    *
-   * @see \Drupal\libraries\ExternalLibrary\ExternalLibraryInterface::getDependencies()
+   * @see \Drupal\libraries\ExternalLibrary\LibraryInterface::getDependencies()
    */
   public function getDependencies() {
     // @todo Turn into something useful and split into some other trait.

@@ -47,7 +47,7 @@ trait SingleAssetLibraryTrait {
   /**
    * Processes a list of dependencies into a list of attachable library IDs.
    *
-   * @param \Drupal\libraries\ExternalLibrary\ExternalLibraryInterface[] $dependencies
+   * @param \Drupal\libraries\ExternalLibrary\LibraryInterface[] $dependencies
    *   An list of external libraries.
    *
    * @return string[]
@@ -60,7 +60,7 @@ trait SingleAssetLibraryTrait {
     foreach ($dependencies as $dependency) {
       if (!$dependency instanceof AssetLibraryInterface) {
         // @todo Somehow integrate this with canBeAttached().
-        /** @var \Drupal\libraries\ExternalLibrary\ExternalLibraryInterface $this */
+        /** @var \Drupal\libraries\ExternalLibrary\LibraryInterface $this */
         throw new InvalidLibraryDependencyException($this, $dependency);
       }
 

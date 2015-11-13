@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\libraries\ExternalLibrary\ExternalLibraryInterface.
+ * Contains \Drupal\libraries\ExternalLibrary\LibraryInterface.
  */
 
 namespace Drupal\libraries\ExternalLibrary;
@@ -11,7 +11,7 @@ namespace Drupal\libraries\ExternalLibrary;
 /**
  * Provides an interface for different types of external libraries.
  */
-interface ExternalLibraryInterface {
+interface LibraryInterface {
 
   /**
    * Returns the ID of the library.
