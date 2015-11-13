@@ -7,8 +7,7 @@ services:
       - '@libraries.php_file_loader'
   libraries.registry:
     class: Drupal\libraries\ExternalLibrary\Registry\ExternalLibraryRegistry
-    # @todo Reconsider the decision to go with JSON instead of YAML.
-    arguments: ['@serialization.json', '@plugin.manager.libraries.locator']
+    arguments: ['@serialization.yaml', '@plugin.manager.libraries.locator']
   plugin.manager.libraries.locator:
     class: Drupal\libraries\ExternalLibrary\Local\LocatorManager
     parent: default_plugin_manager
