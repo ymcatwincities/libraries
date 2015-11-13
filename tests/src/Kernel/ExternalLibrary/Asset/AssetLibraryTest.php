@@ -82,8 +82,29 @@ class AssetLibraryTest extends ExternalLibraryKernelTestBase {
    */
   public function testAssetLibrary() {
     $library = $this->libraryDiscovery->getLibraryByName('libraries', 'test_asset_library');
-    $this->assertNotEquals(FALSE, $library);
-    $this->assertTrue(is_array($library));
+    $expected = [
+      'version' => '1.0',
+      'css' => [[
+        'weight' => -200,
+        'group' => 0,
+        'type' => 'external',
+        'data' => 'http://example.com/example.css',
+        'version' => '1.0',
+      ]],
+      'js' => [[
+        'group' => -100,
+        'type' => 'external',
+        'data' => 'http://example.com/example.js',
+        'version' => '1.0',
+      ]],
+      'dependencies' => [],
+      'license' => [
+        'name' => 'GNU-GPL-2.0-or-later',
+        'url' => 'https://www.drupal.org/licensing/faq',
+        'gpl-compatible' => TRUE,
+      ]
+    ];
+    $this->assertEquals($expected, $library);
   }
 
 }
