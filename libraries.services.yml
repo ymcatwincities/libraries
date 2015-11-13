@@ -1,12 +1,12 @@
 services:
   libraries.manager:
-    class: Drupal\libraries\ExternalLibrary\ExternalLibraryManager
+    class: Drupal\libraries\ExternalLibrary\LibraryManager
     arguments:
       - '@libraries.registry'
       - '@libraries.extension_handler'
       - '@libraries.php_file_loader'
   libraries.registry:
-    class: Drupal\libraries\ExternalLibrary\Registry\ExternalLibraryRegistry
+    class: Drupal\libraries\ExternalLibrary\Registry\LibraryRegistry
     arguments: ['@serialization.yaml', '@plugin.manager.libraries.locator']
   plugin.manager.libraries.locator:
     class: Drupal\libraries\ExternalLibrary\Local\LocatorManager
