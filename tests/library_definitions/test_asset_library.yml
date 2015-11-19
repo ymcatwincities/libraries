@@ -1,5 +1,5 @@
 id: test_asset_library
-class: Drupal\libraries\ExternalLibrary\Asset\AssetLibrary
+type: asset
 remote_url: http://example.com
 css:
   base:

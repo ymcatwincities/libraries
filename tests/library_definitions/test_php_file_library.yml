@@ -1,3 +1,3 @@
 id: test_php_file_library
-class: Drupal\libraries\ExternalLibrary\PhpFile\PhpFileLibrary
+type: php_file
 files: [test_php_file_library.php]

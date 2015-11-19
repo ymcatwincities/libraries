@@ -7,7 +7,7 @@
 
 namespace Drupal\libraries\ExternalLibrary;
 use Drupal\libraries\Extension\ExtensionHandlerInterface;
-use Drupal\libraries\ExternalLibrary\PhpFile\PhpFileLibraryInterface;
+use Drupal\libraries\ExternalLibrary\LibraryType\LibraryLoadingListenerInterface;
 use Drupal\libraries\ExternalLibrary\PhpFile\PhpFileLoaderInterface;
 use Drupal\libraries\ExternalLibrary\Registry\LibraryRegistryInterface;
 
@@ -29,13 +29,6 @@ class LibraryManager implements LibraryManagerInterface {
    * @var \Drupal\libraries\Extension\ExtensionHandlerInterface
    */
   protected $extensionHandler;
-
-  /**
-   * The PHP file loader.
-   *
-   * @var \Drupal\libraries\ExternalLibrary\PhpFile\PhpFileLoaderInterface
-   */
-  protected $phpFileLoader;
 
   /**
    * Constructs an external library manager.
@@ -77,14 +70,11 @@ class LibraryManager implements LibraryManagerInterface {
    * {@inheritdoc}
    */
   public function load($id) {
-    // @todo Dispatch some type of event, to provide loose coupling.
-    $library = $this->registry->getLibrary($id);
+    $library_type = $this->registry->getLibraryType($id);
     // @todo Throw an exception instead of silently failing.
-    if ($library instanceof PhpFileLibraryInterface) {
-      foreach ($library->getPhpFiles() as $file) {
-        $this->phpFileLoader->load($file);
-      }
-    }
+    if ($library_type instanceof LibraryLoadingListenerInterface) {
+      $library_type->onLibraryLoad($this->registry->getLibrary($id));
+   }
   }
 
 }

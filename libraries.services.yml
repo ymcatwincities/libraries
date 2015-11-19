@@ -7,15 +7,21 @@ services:
       - '@libraries.php_file_loader'
   libraries.registry:
     class: Drupal\libraries\ExternalLibrary\Registry\LibraryRegistry
-    arguments: ['@serialization.yaml', '@plugin.manager.libraries.locator']
+    arguments: ['@serialization.yaml', '@plugin.manager.libraries.library_type']
+
+  plugin.manager.libraries.library_type:
+    class: Drupal\libraries\ExternalLibrary\LibraryType\LibraryTypeManager
+    parent: default_plugin_manager
   plugin.manager.libraries.locator:
     class: Drupal\libraries\ExternalLibrary\Local\LocatorManager
     parent: default_plugin_manager
+
   libraries.extension_handler:
     class: Drupal\libraries\Extension\ExtensionHandler
     arguments: ['%app.root', '@module_handler', '@theme_handler']
   libraries.php_file_loader:
     class: Drupal\libraries\ExternalLibrary\PhpFile\PhpRequireLoader
+
   stream_wrapper.library_definitions:
     class: Drupal\libraries\StreamWrapper\LibraryDefinitionsStream
     arguments: ['@config.factory']
@@ -29,6 +35,7 @@ services:
     class: Drupal\libraries\StreamWrapper\PhpFileLibrariesStream
     tags:
       - { name: stream_wrapper, scheme: 'php-file' }
+
 
   cache.libraries:
     class: Drupal\Core\Cache\CacheBackendInterface

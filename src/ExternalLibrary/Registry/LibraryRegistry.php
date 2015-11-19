@@ -9,13 +9,16 @@ namespace Drupal\libraries\ExternalLibrary\Registry;
 
 use Drupal\Component\Plugin\Factory\FactoryInterface;
 use Drupal\Component\Serialization\SerializationInterface;
-use Drupal\libraries\ExternalLibrary\Exception\LibraryClassNotFoundException;
 use Drupal\libraries\ExternalLibrary\Exception\LibraryDefinitionNotFoundException;
+use Drupal\libraries\ExternalLibrary\Exception\LibraryTypeNotFoundException;
+use Drupal\libraries\ExternalLibrary\LibraryType\LibraryCreationListenerInterface;
+use Drupal\libraries\ExternalLibrary\LibraryTypeManagerInterface;
 use Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface;
 
 /**
  * Provides an implementation of a registry of external libraries.
  *
+ * @todo Consider moving parts of this logic into LibraryManager.
  * @todo Allow for JavaScript CDN's, Packagist, etc. to act as library
  *   registries.
  */
@@ -29,42 +32,40 @@ class LibraryRegistry implements LibraryRegistryInterface {
   protected $serializer;
 
   /**
-   * The library locator factory.
+   * The library type manager.
    *
    * @var \Drupal\Component\Plugin\Factory\FactoryInterface
    */
-  protected $locatorFactory;
+  protected $libraryTypeFactory;
 
   /**
    * Constructs a registry of external libraries.
    *
    * @param \Drupal\Component\Serialization\SerializationInterface $serializer
    *   The serializer for the library definition files.
-   * @param \Drupal\Component\Plugin\Factory\FactoryInterface $locator_factory
-   *   The library locator factory.
+   * @param \Drupal\Component\Plugin\Factory\FactoryInterface $library_type_factory
+   *   The library type manager.
    */
   public function __construct(
     SerializationInterface $serializer,
-    FactoryInterface $locator_factory
+    FactoryInterface $library_type_factory
   ) {
     $this->serializer = $serializer;
-    $this->locatorFactory = $locator_factory;
+    $this->libraryTypeFactory = $library_type_factory;
   }
 
   /**
    * {@inheritdoc}
    */
   public function getLibrary($id) {
-    if (!$this->hasDefinition($id)) {
-      throw new LibraryDefinitionNotFoundException($id);
-    }
-    $definition = $this->getDefinition($id);
-    $class = $this->getClass($id, $definition);
-    $library = $class::create($id, $definition);
+    $library_type = $this->getLibraryType($id);
 
-    // @todo Dispatch an event to provide loose coupling
-    if ($library instanceof LocalLibraryInterface) {
-      $library->getLocator($this->locatorFactory)->locate($library);
+    $class = $library_type->getLibraryClass();
+    // @todo Make sure that the library class implements the correct interface.
+    $library = $class::create($id, $this->getDefinition($id));
+
+    if ($library_type instanceof LibraryCreationListenerInterface) {
+      $library_type->onLibraryCreate($library);
     }
 
     return $library;
@@ -91,8 +92,13 @@ class LibraryRegistry implements LibraryRegistryInterface {
    *
    * @return array
    *   The library definition array parsed from the definition JSON file.
+   *
+   * @throws \Drupal\libraries\ExternalLibrary\Exception\LibraryDefinitionNotFoundException
    */
   protected function getDefinition($id) {
+    if (!$this->hasDefinition($id)) {
+      throw new LibraryDefinitionNotFoundException($id);
+    }
     return $this->serializer->decode(file_get_contents($this->getFileUri($id)));
   }
 
@@ -111,25 +117,15 @@ class LibraryRegistry implements LibraryRegistryInterface {
   }
 
   /**
-   * Returns the library class for a library definition.
-   *
-   * @param string $id
-   *   The ID of the external library.
-   * @param array $definition
-   *   The library definition array parsed from the definition JSON file.
-   *
-   * @return string|\Drupal\libraries\ExternalLibrary\LibraryInterface
-   *   The library class.
-   *
-   * @throws \Drupal\libraries\ExternalLibrary\Exception\LibraryClassNotFoundException
+   * {@inheritdoc}
    */
-  protected function getClass($id, array $definition) {
-    // @todo Reconsider
-    if (!isset($definition['class'])) {
-      throw new LibraryClassNotFoundException($id);
+  public function getLibraryType($id) {
+    $definition = $this->getDefinition($id);
+    // @todo Validate that the type is a string.
+    if (!isset($definition['type'])) {
+      throw new LibraryTypeNotFoundException($id);
     }
-    // @todo Make sure the class exists.
-    return $definition['class'];
+    return  $this->libraryTypeFactory->createInstance($definition['type']);
   }
 
 }

@@ -27,4 +27,27 @@ interface LibraryRegistryInterface {
    */
   public function getLibrary($id);
 
+  /**
+   * Returns the library type for a library ID.
+   *
+   * Note that the passed ID is not the ID of the library type, but the library
+   * ID itself. Use the LibraryTypeManager to retrieve a library type given its
+   * ID.
+   *
+   * @param string $id
+   *   The ID of the external library.
+   *
+   * @return string|\Drupal\libraries\ExternalLibrary\LibraryType\LibraryTypeInterface
+   *   The library type.
+   *
+   * @see \Drupal\libraries\ExternalLibrary\LibraryTypeManager
+   *
+   * @throws \Drupal\libraries\ExternalLibrary\Exception\LibraryClassNotFoundException
+   * @throws \Drupal\Component\Plugin\Exception\PluginException
+   *
+   * @todo Consider making this protected again, when this is moved to the
+   *   LibraryManager.
+   */
+  public function getLibraryType($id);
+
 }
