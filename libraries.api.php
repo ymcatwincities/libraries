@@ -172,6 +172,8 @@
  *   Additional top-level properties can be registered as needed.
  *
  * @see hook_library()
+ *
+ * @deprecated Will be removed before a stable Drupal 8 release.
  */
 function hook_libraries_info() {
   // The following is a full explanation of all properties. See below for more
@@ -411,6 +413,8 @@ function hook_libraries_info() {
  * integration files inside of an array, whose key is the module name.
  *
  * @see hook_libraries_info()
+ *
+ * @deprecated Will be removed before a stable Drupal 8 release.
  */
 function hook_libraries_info_alter(&$libraries) {
   $files = array(
@@ -435,6 +439,8 @@ function hook_libraries_info_alter(&$libraries) {
  *
  * @return
  *   An array of paths.
+ *
+ * @deprecated Will be removed before a stable Drupal 8 release.
  */
 function hook_libraries_info_file_paths() {
   // Taken from the Libraries test module, which needs to specify the path to
