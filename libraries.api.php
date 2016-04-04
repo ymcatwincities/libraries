@@ -6,6 +6,71 @@
  */
 
 /**
+ * @defgroup libraries External libraries
+ * @{
+ * External libraries are not shipped as part of contributed modules for
+ * licensing and maintenance reasons. The Libraries API module aims to solve the
+ * problem of integrating with and loading external libraries as part of the
+ * Drupal request-response process in a generic way.
+ *
+ * @section sec_definitions Library definitions
+ * In order to do be useful to other modules Libraries API needs a list of
+ * known libraries and metadata about each of the libraries. Because multiple
+ * modules or themes may integrate with the same external library a key
+ * objective of Libraries API is to keep this information separate from any one
+ * module or theme.
+ *
+ * @subsection sub_definitions_machine_name
+ * A central part of a library's metadata is the library's machine name or ID.
+ * For maximum interoperability it must consist of only lowercase ASCII letters,
+ * numbers, and underscores. As the machine name is the single identifier of a
+ * library and is independent of any given module or theme name it must be
+ * unique among all libraries known to Libraries API.
+ *
+ * @subsection sub_definitions_history Historical background
+ * In Drupal 7 library information could already be provided by
+ * module-independent info files, but this was not widely used, because there
+ * was no way to distribute these info files properly. The information was
+ * predominantly provided by a hook that modules could implement, which caused
+ * race conditions between modules providing information for the same library.
+ * Thus, in Drupal 8 there is no longer a hook making it necessary to properly
+ * solve the problem of centrally maintaining and distributing library info
+ * files. This has yet to be done.
+ *
+ * @subsection sub_definitions_stream_wrapper
+ * In anticipation of a central repository of library information that will
+ * distribute library definitions as separate files Libraries API provides a
+ * 'library-definitions' stream wrapper. Due to that a library's definition can
+ * be accessed given only it's machine name, for example at
+ * 'library-definitions://example.yml' for a library with the machine name
+ * 'example'. YAML is chosen as the file format because it is used in many parts
+ * of Drupal 8 already. Using a stream wrapper has the benefit of being able to
+ * swap out the specific storage implementation without any other part of the
+ * code needing to change. For example, the specific directory which holds the
+ * library definitions on disk can be changed, multiple directories can be
+ * layered as though they were one, or the library definitions can even be
+ * read from a remote location without any part of the code other than the
+ * stream wrapper implementation itself needing to change.
+ *
+ * By default the library definitions stream wrapper reads from a single
+ * directory that is configurable and points to the 'library-definitions'
+ * directory within the public files directory by default. This makes library
+ * definitions writable by the webserver by default, which is in anticipation of
+ * a user interface that fetches definitions from a remote repository and stores
+ * them locally. For improved security the library definitions can be managed
+ * manually (or put under version control) and placed in a directory that is not
+ * writable by the webserver. The idea of using a stream wrapper for this as
+ * well as the default location is taken from the 'translations' stream wrapper
+ * provided by the Interface Translation module.
+ *
+ * @see \Drupal\libraries\ExternalLibrary\Registry\LibraryRegistryInterface
+ * @see \Drupal\libraries\ExternalLibrary\Registry\LibraryRegistry
+ * @see \Drupal\libraries\StreamWrapper\LibraryDefinitionsStream
+ *
+ * @}
+ */
+
+/**
  * Return information about external libraries.
  *
  * @return

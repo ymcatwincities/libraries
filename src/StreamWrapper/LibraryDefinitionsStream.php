@@ -13,7 +13,7 @@ use Drupal\Core\StreamWrapper\LocalStream;
  * Provides a stream wrapper for library definitions.
  *
  * Can be used with the 'library-definitions' scheme, for example
- * 'library-definitions://example.json'.
+ * 'library-definitions://example.yml'.
  *
  * @see \Drupal\locale\StreamWrapper\TranslationsStream
  */

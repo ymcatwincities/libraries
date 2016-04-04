@@ -12,8 +12,6 @@ use Drupal\Component\Serialization\SerializationInterface;
 use Drupal\libraries\ExternalLibrary\Exception\LibraryDefinitionNotFoundException;
 use Drupal\libraries\ExternalLibrary\Exception\LibraryTypeNotFoundException;
 use Drupal\libraries\ExternalLibrary\LibraryType\LibraryCreationListenerInterface;
-use Drupal\libraries\ExternalLibrary\LibraryTypeManagerInterface;
-use Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface;
 
 /**
  * Provides an implementation of a registry of external libraries.
