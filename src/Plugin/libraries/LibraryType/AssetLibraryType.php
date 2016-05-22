@@ -9,10 +9,12 @@ namespace Drupal\libraries\Plugin\libraries\LibraryType;
 
 use Drupal\Component\Plugin\Factory\FactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\libraries\ExternalLibrary\Asset\AssetLibrary;
 use Drupal\libraries\ExternalLibrary\LibraryInterface;
 use Drupal\libraries\ExternalLibrary\LibraryType\LibraryCreationListenerInterface;
 use Drupal\libraries\ExternalLibrary\LibraryType\LibraryTypeInterface;
 use Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface;
+use Drupal\libraries\ExternalLibrary\Utility\IdAccessorTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -24,6 +26,8 @@ class AssetLibraryType implements
   ContainerFactoryPluginInterface
 {
 
+  use IdAccessorTrait;
+
   /**
    * The locator factory.
    *
@@ -32,12 +36,15 @@ class AssetLibraryType implements
   protected $locatorFactory;
 
   /**
-   * Constructs the PHP file library type.
+   * Constructs the asset library type.
    *
+   * @param string $plugin_id
+   *   The plugin ID taken from the class annotation.
    * @param \Drupal\Component\Plugin\Factory\FactoryInterface $locator_factory
    *   The locator factory.
    */
-  public function __construct(FactoryInterface $locator_factory) {
+  public function __construct($plugin_id, FactoryInterface $locator_factory) {
+    $this->id = $plugin_id;
     $this->locatorFactory = $locator_factory;
   }
 
@@ -45,23 +52,14 @@ class AssetLibraryType implements
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static($container->get('plugin.manager.libraries.locator'));
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getId() {
-    // @todo Remove the duplication with the annotation.
-    return 'asset';
+    return new static($plugin_id, $container->get('plugin.manager.libraries.locator'));
   }
 
   /**
    * {@inheritdoc}
    */
   public function getLibraryClass() {
-    // @todo Make this alter-able.
-    return 'Drupal\libraries\ExternalLibrary\Asset\AssetLibrary';
+    return AssetLibrary::class;
   }
 
   /**

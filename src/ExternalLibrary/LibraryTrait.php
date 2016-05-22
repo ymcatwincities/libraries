@@ -7,29 +7,14 @@
 
 namespace Drupal\libraries\ExternalLibrary;
 
+use Drupal\libraries\ExternalLibrary\Utility\IdAccessorTrait;
+
 /**
  * Provides a base external library implementation.
  */
 trait LibraryTrait {
 
-  /**
-   * The library ID.
-   *
-   * @var string
-   */
-  protected $id;
-
-  /**
-   * Returns the ID of the library.
-   *
-   * @return string
-   *   The library ID. This must be unique among all known libraries.
-   *
-   * @see \Drupal\libraries\ExternalLibrary\LibraryInterface::getId()
-   */
-  public function getId() {
-    return $this->id;
-  }
+  use IdAccessorTrait;
 
   /**
    * Returns the currently installed version of the library.

@@ -58,7 +58,7 @@ class LibraryRegistry implements LibraryRegistryInterface {
   public function getLibrary($id) {
     $library_type = $this->getLibraryType($id);
 
-    $class = $library_type->getLibraryClass();
+    $class = $this->libraryTypeFactory->getLibraryClass($library_type);
     // @todo Make sure that the library class implements the correct interface.
     $library = $class::create($id, $this->getDefinition($id));
 

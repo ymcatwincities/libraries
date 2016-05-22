@@ -13,7 +13,9 @@ use Drupal\libraries\ExternalLibrary\LibraryInterface;
 use Drupal\libraries\ExternalLibrary\LibraryType\LibraryCreationListenerInterface;
 use Drupal\libraries\ExternalLibrary\LibraryType\LibraryLoadingListenerInterface;
 use Drupal\libraries\ExternalLibrary\LibraryType\LibraryTypeInterface;
+use Drupal\libraries\ExternalLibrary\PhpFile\PhpFileLibrary;
 use Drupal\libraries\ExternalLibrary\PhpFile\PhpFileLoaderInterface;
+use Drupal\libraries\ExternalLibrary\Utility\IdAccessorTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -25,6 +27,8 @@ class PhpFileLibraryType implements
   LibraryLoadingListenerInterface,
   ContainerFactoryPluginInterface
 {
+
+  use IdAccessorTrait;
 
   /**
    * The locator factory.
@@ -43,12 +47,15 @@ class PhpFileLibraryType implements
   /**
    * Constructs the PHP file library type.
    *
+   * @param string $plugin_id
+   *   The plugin ID taken from the class annotation.
    * @param \Drupal\Component\Plugin\Factory\FactoryInterface $locator_factory
    *   The locator factory.
    * @param \Drupal\libraries\ExternalLibrary\PhpFile\PhpFileLoaderInterface $php_file_loader
    *   The PHP file loader.
    */
-  public function __construct(FactoryInterface $locator_factory, PhpFileLoaderInterface $php_file_loader) {
+  public function __construct($plugin_id, FactoryInterface $locator_factory, PhpFileLoaderInterface $php_file_loader) {
+    $this->id = $plugin_id;
     $this->locatorFactory = $locator_factory;
     $this->phpFileLoader = $php_file_loader;
   }
@@ -58,6 +65,7 @@ class PhpFileLibraryType implements
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     return new static(
+      $plugin_id,
       $container->get('plugin.manager.libraries.locator'),
       $container->get('libraries.php_file_loader')
     );
@@ -66,17 +74,8 @@ class PhpFileLibraryType implements
   /**
    * {@inheritdoc}
    */
-  public function getId() {
-    // @todo Remove the duplication with the annotation.
-    return 'php_file';
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function getLibraryClass() {
-    // @todo Make this alter-able.
-    return 'Drupal\libraries\ExternalLibrary\PhpFile\PhpFileLibrary';
+    return PhpFileLibrary::class;
   }
 
   /**

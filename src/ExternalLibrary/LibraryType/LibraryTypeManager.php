@@ -10,11 +10,12 @@ namespace Drupal\libraries\ExternalLibrary\LibraryType;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
+use Drupal\libraries\Annotation\LibraryType;
 
 /**
  * Provides a plugin manager for library type plugins.
  */
-class LibraryTypeManager extends DefaultPluginManager {
+class LibraryTypeManager extends DefaultPluginManager implements LibraryTypeManagerInterface {
 
   /**
    * Constructs a locator manager.
@@ -28,9 +29,19 @@ class LibraryTypeManager extends DefaultPluginManager {
    *   The module handler to invoke the alter hook with.
    */
   public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
-    parent::__construct('Plugin/libraries/LibraryType', $namespaces, $module_handler, 'Drupal\libraries\ExternalLibrary\LibraryType\LibraryTypeInterface', 'Drupal\libraries\Annotation\LibraryType');
+    parent::__construct('Plugin/libraries/LibraryType', $namespaces, $module_handler, LibraryTypeInterface::class, LibraryType::class);
+    // @todo Document this hook.
     $this->alterInfo('libraries_library_type_info');
     $this->setCacheBackend($cache_backend, 'libraries_library_type_info');
   }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getLibraryClass(LibraryTypeInterface $library_type) {
+    // @todo Make this alter-able.
+    return $library_type->getLibraryClass();
+  }
+
 
 }
