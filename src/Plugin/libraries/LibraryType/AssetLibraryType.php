@@ -15,6 +15,7 @@ use Drupal\libraries\ExternalLibrary\LibraryType\LibraryCreationListenerInterfac
 use Drupal\libraries\ExternalLibrary\LibraryType\LibraryTypeInterface;
 use Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface;
 use Drupal\libraries\ExternalLibrary\Utility\IdAccessorTrait;
+use Drupal\libraries\ExternalLibrary\Version\VersionedLibraryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -36,23 +37,37 @@ class AssetLibraryType implements
   protected $locatorFactory;
 
   /**
+   * The version detector factory.
+   *
+   * @var \Drupal\Component\Plugin\Factory\FactoryInterface
+   */
+  protected $detectorFactory;
+
+  /**
    * Constructs the asset library type.
    *
    * @param string $plugin_id
    *   The plugin ID taken from the class annotation.
    * @param \Drupal\Component\Plugin\Factory\FactoryInterface $locator_factory
    *   The locator factory.
+   * @param \Drupal\Component\Plugin\Factory\FactoryInterface $detector_factory
+   *   The version detector factory.
    */
-  public function __construct($plugin_id, FactoryInterface $locator_factory) {
+  public function __construct($plugin_id, FactoryInterface $locator_factory, FactoryInterface $detector_factory) {
     $this->id = $plugin_id;
     $this->locatorFactory = $locator_factory;
+    $this->detectorFactory = $detector_factory;
   }
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static($plugin_id, $container->get('plugin.manager.libraries.locator'));
+    return new static(
+      $plugin_id,
+      $container->get('plugin.manager.libraries.locator'),
+      $container->get('plugin.manager.libraries.version_detector')
+    );
   }
 
   /**
@@ -70,6 +85,9 @@ class AssetLibraryType implements
     // files, but this is not required.
     if ($library instanceof LocalLibraryInterface) {
       $library->getLocator($this->locatorFactory)->locate($library);
+    }
+    if ($library instanceof VersionedLibraryInterface) {
+      $library->getVersionDetector($this->detectorFactory)->detectVersion($library);
     }
   }
 

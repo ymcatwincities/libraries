@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\Tests\libraries\Kernel\ExternalLibrary\PhpFile\PhpFileLibraryTest.
- */
-
 namespace Drupal\Tests\libraries\Kernel\ExternalLibrary\PhpFile;
 
 use Drupal\libraries\ExternalLibrary\Exception\LibraryClassNotFoundException;

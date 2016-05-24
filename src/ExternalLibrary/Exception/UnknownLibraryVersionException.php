@@ -1,28 +1,22 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\libraries\ExternalLibrary\Exception\LibraryDefinitionNotFoundException.
- */
-
 namespace Drupal\libraries\ExternalLibrary\Exception;
 
-use Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface;
 use Drupal\libraries\ExternalLibrary\Utility\LibraryAccessorTrait;
-use Exception;
+use Drupal\libraries\ExternalLibrary\Version\VersionedLibraryInterface;
 
 /**
- * Provides an exception for a library that is not installed.
+ * Provides an exception for libraries whose version has not been detected.
  */
-class LibraryNotInstalledException extends \RuntimeException {
+class UnknownLibraryVersionException extends \RuntimeException {
 
   use LibraryAccessorTrait;
 
   /**
    * Constructs a library exception.
    *
-   * @param \Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface $library
-   *   The library that is not installed.
+   * @param \Drupal\libraries\ExternalLibrary\Version\VersionedLibraryInterface $library
+   *   The library.
    * @param string $message
    *   (optional) The exception message.
    * @param int $code
@@ -31,13 +25,13 @@ class LibraryNotInstalledException extends \RuntimeException {
    *   (optional) The previous exception.
    */
   public function __construct(
-    LocalLibraryInterface $library,
+    VersionedLibraryInterface $library,
     $message = '',
     $code = 0,
     \Exception $previous = NULL
   ) {
     $this->library = $library;
-    $message = $message ?: "The library '{$this->library->getId()}' is not installed.";
+    $message = $message ?: "The version of library '{$this->library->getId()}' could not be detected.";
     parent::__construct($message, $code, $previous);
   }
 

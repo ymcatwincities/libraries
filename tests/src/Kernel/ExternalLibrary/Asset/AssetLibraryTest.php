@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\Tests\libraries\Kernel\ExternalLibrary\Asset\AssetLibraryTest.
- */
-
 namespace Drupal\Tests\libraries\Kernel\ExternalLibrary\Asset;
 
 use Drupal\libraries\ExternalLibrary\Asset\AssetLibrary;
@@ -55,7 +50,7 @@ class AssetLibraryTest extends LibraryKernelTestBase {
 
       $this->assertEquals('test_asset_library', $library->getId());
       $expected = ['test_asset_library' => [
-        'version' => 1.0,
+        'version' => '1.0.0',
         'css' => ['base' => ['http://example.com/example.css' => []]],
         'js' => ['http://example.com/example.js' => []],
         'dependencies' => [],
@@ -84,19 +79,19 @@ class AssetLibraryTest extends LibraryKernelTestBase {
   public function testAssetLibraryRemote() {
     $library = $this->libraryDiscovery->getLibraryByName('libraries', 'test_asset_library');
     $expected = [
-      'version' => '1.0',
+      'version' => '1.0.0',
       'css' => [[
         'weight' => -200,
         'group' => 0,
         'type' => 'external',
         'data' => 'http://example.com/example.css',
-        'version' => '1.0',
+        'version' => '1.0.0',
       ]],
       'js' => [[
         'group' => -100,
         'type' => 'external',
         'data' => 'http://example.com/example.js',
-        'version' => '1.0',
+        'version' => '1.0.0',
       ]],
       'dependencies' => [],
       'license' => [
@@ -120,19 +115,19 @@ class AssetLibraryTest extends LibraryKernelTestBase {
     $this->libraryDiscovery->clearCachedDefinitions();
     $library = $this->libraryDiscovery->getLibraryByName('libraries', 'test_asset_library');
     $expected = [
-      'version' => '1.0',
+      'version' => '1.0.0',
       'css' => [[
         'weight' => -200,
         'group' => 0,
         'type' => 'file',
         'data' => $this->modulePath . '/tests/assets/vendor/test_asset_library/example.css',
-        'version' => '1.0',
+        'version' => '1.0.0',
       ]],
       'js' => [[
         'group' => -100,
         'type' => 'file',
         'data' => $this->modulePath . '/tests/assets/vendor/test_asset_library/example.js',
-        'version' => '1.0',
+        'version' => '1.0.0',
         'minified' => FALSE,
       ]],
       'dependencies' => [],

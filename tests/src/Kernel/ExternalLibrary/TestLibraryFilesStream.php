@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\Tests\libraries\Kernel\ExternalLibrary\TestPhpLibraryFilesStream.
- */
-
 namespace Drupal\Tests\libraries\Kernel\ExternalLibrary;
 
 use Drupal\Core\Extension\ModuleHandlerInterface;

@@ -42,10 +42,6 @@ trait LocalRemoteAssetTrait {
   /**
    * Gets the locator of this library using the locator factory.
    *
-   * Because determining the installation status and library path of a library
-   * is not specific to any library or even any library type, this logic is
-   * offloaded to separate locator objects.
-   *
    * @param \Drupal\Component\Plugin\Factory\FactoryInterface $locator_factory
    *
    * @return \Drupal\libraries\ExternalLibrary\Local\LocatorInterface

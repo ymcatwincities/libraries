@@ -17,6 +17,7 @@ use Drupal\libraries\ExternalLibrary\Exception\InvalidLibraryDependencyException
  *
  * @see \Drupal\libraries\ExternalLibrary\Asset\AssetLibraryInterface
  * @see \Drupal\libraries\ExternalLibrary\ExternalLibraryInterface
+ * @see \Drupal\libraries\ExternalLibrary\Version\VersionedLibraryInterface
  */
 trait SingleAssetLibraryTrait {
 

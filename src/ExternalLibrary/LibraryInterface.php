@@ -24,14 +24,6 @@ interface LibraryInterface {
   public function getId();
 
   /**
-   * Returns the currently installed version of the library.
-   *
-   * @return string
-   *   The version string, for example 1.0, 2.1.4, or 3.0.0-alpha5.
-   */
-  public function getVersion();
-
-  /**
    * Returns the libraries dependencies, if any.
    *
    * @return array
