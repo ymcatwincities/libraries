@@ -1,11 +1,6 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\libraries\ExternalLibrary\LibraryType\LibraryLoadingListenerInterface.
- */
-
-namespace Drupal\libraries\ExternalLibrary\LibraryType;
+namespace Drupal\libraries\ExternalLibrary\Type;
 
 use Drupal\libraries\ExternalLibrary\LibraryInterface;
 

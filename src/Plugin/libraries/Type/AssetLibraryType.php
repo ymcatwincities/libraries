@@ -1,18 +1,13 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\libraries\Plugin\libraries\LibraryType\AssetLibraryType.
- */
-
-namespace Drupal\libraries\Plugin\libraries\LibraryType;
+namespace Drupal\libraries\Plugin\libraries\Type;
 
 use Drupal\Component\Plugin\Factory\FactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\libraries\ExternalLibrary\Asset\AssetLibrary;
 use Drupal\libraries\ExternalLibrary\LibraryInterface;
-use Drupal\libraries\ExternalLibrary\LibraryType\LibraryCreationListenerInterface;
-use Drupal\libraries\ExternalLibrary\LibraryType\LibraryTypeInterface;
+use Drupal\libraries\ExternalLibrary\Type\LibraryCreationListenerInterface;
+use Drupal\libraries\ExternalLibrary\Type\LibraryTypeInterface;
 use Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface;
 use Drupal\libraries\ExternalLibrary\Utility\IdAccessorTrait;
 use Drupal\libraries\ExternalLibrary\Version\VersionedLibraryInterface;

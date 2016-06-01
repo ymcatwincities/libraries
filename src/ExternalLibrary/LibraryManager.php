@@ -9,8 +9,8 @@ namespace Drupal\libraries\ExternalLibrary;
 use Drupal\Component\Plugin\Factory\FactoryInterface;
 use Drupal\libraries\Extension\ExtensionHandlerInterface;
 use Drupal\libraries\ExternalLibrary\Exception\LibraryTypeNotFoundException;
-use Drupal\libraries\ExternalLibrary\LibraryType\LibraryCreationListenerInterface;
-use Drupal\libraries\ExternalLibrary\LibraryType\LibraryLoadingListenerInterface;
+use Drupal\libraries\ExternalLibrary\Type\LibraryCreationListenerInterface;
+use Drupal\libraries\ExternalLibrary\Type\LibraryLoadingListenerInterface;
 use Drupal\libraries\ExternalLibrary\Definition\DefinitionDiscoveryInterface;
 
 /**

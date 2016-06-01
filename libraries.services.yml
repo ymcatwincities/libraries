@@ -10,7 +10,7 @@ services:
     arguments: ['@serialization.yaml']
 
   plugin.manager.libraries.library_type:
-    class: Drupal\libraries\ExternalLibrary\LibraryType\LibraryTypeFactory
+    class: Drupal\libraries\ExternalLibrary\Type\LibraryTypeFactory
     parent: default_plugin_manager
   plugin.manager.libraries.locator:
     class: Drupal\libraries\ExternalLibrary\Local\LocatorManager

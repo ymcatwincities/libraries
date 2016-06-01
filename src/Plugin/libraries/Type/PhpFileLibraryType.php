@@ -1,18 +1,13 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\libraries\Plugin\libraries\LibraryType\PhpFileLibraryType.
- */
-
-namespace Drupal\libraries\Plugin\libraries\LibraryType;
+namespace Drupal\libraries\Plugin\libraries\Type;
 
 use Drupal\Component\Plugin\Factory\FactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\libraries\ExternalLibrary\LibraryInterface;
-use Drupal\libraries\ExternalLibrary\LibraryType\LibraryCreationListenerInterface;
-use Drupal\libraries\ExternalLibrary\LibraryType\LibraryLoadingListenerInterface;
-use Drupal\libraries\ExternalLibrary\LibraryType\LibraryTypeInterface;
+use Drupal\libraries\ExternalLibrary\Type\LibraryCreationListenerInterface;
+use Drupal\libraries\ExternalLibrary\Type\LibraryLoadingListenerInterface;
+use Drupal\libraries\ExternalLibrary\Type\LibraryTypeInterface;
 use Drupal\libraries\ExternalLibrary\PhpFile\PhpFileLibrary;
 use Drupal\libraries\ExternalLibrary\PhpFile\PhpFileLoaderInterface;
 use Drupal\libraries\ExternalLibrary\Utility\IdAccessorTrait;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\libraries\ExternalLibrary\LibraryType;
+namespace Drupal\libraries\ExternalLibrary\Type;
 
 use Drupal\Component\Plugin\Factory\FactoryInterface;
 use Drupal\Core\Cache\CacheBackendInterface;
@@ -25,7 +25,7 @@ class LibraryTypeFactory extends DefaultPluginManager {
    *   The module handler to invoke the alter hook with.
    */
   public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
-    parent::__construct('Plugin/libraries/LibraryType', $namespaces, $module_handler, LibraryTypeInterface::class, LibraryType::class);
+    parent::__construct('Plugin/libraries/Type', $namespaces, $module_handler, LibraryTypeInterface::class, LibraryType::class);
     // @todo Document this hook.
     $this->alterInfo('libraries_library_type_info');
     $this->setCacheBackend($cache_backend, 'libraries_library_type_info');
