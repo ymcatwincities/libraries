@@ -2,18 +2,15 @@
 
 namespace Drupal\Tests\libraries\Kernel\ExternalLibrary\Asset;
 
-use Drupal\libraries\ExternalLibrary\Asset\AssetLibrary;
-use Drupal\libraries\ExternalLibrary\Exception\LibraryClassNotFoundException;
-use Drupal\libraries\ExternalLibrary\Exception\LibraryDefinitionNotFoundException;
 use Drupal\Tests\libraries\Kernel\ExternalLibrary\TestLibraryFilesStream;
-use Drupal\Tests\libraries\Kernel\LibraryKernelTestBase;
+use Drupal\Tests\libraries\Kernel\LibraryTypeKernelTestBase;
 
 /**
  * Tests that external asset libraries are registered as core asset libraries.
  *
  * @group libraries
  */
-class AssetLibraryTest extends LibraryKernelTestBase {
+class AssetLibraryTypeTest extends LibraryTypeKernelTestBase {
 
   /**
    * {@inheritdoc}
@@ -28,41 +25,36 @@ class AssetLibraryTest extends LibraryKernelTestBase {
    *
    * @var \Drupal\Core\Asset\LibraryDiscoveryInterface
    */
-  protected $libraryDiscovery;
+  protected $coreLibraryDiscovery;
 
   /**
    * {@inheritdoc}
    */
   protected function setUp() {
     parent::setUp();
-
-    $this->libraryDiscovery = $this->container->get('library.discovery');
+    $this->coreLibraryDiscovery = $this->container->get('library.discovery');
   }
 
   /**
-   * Tests that library metadata is correctly gathered.
+   * {@inheritdoc}
    */
-  public function testMetadata() {
-    try {
-      /** @var \Drupal\libraries\ExternalLibrary\Asset\AssetLibrary $library */
-      $library = $this->externalLibraryRegistry->getLibrary('test_asset_library');
-      $this->assertInstanceOf(AssetLibrary::class, $library);
+  protected function getLibraryTypeId() {
+    return 'asset';
+  }
 
-      $this->assertEquals('test_asset_library', $library->getId());
-      $expected = ['test_asset_library' => [
-        'version' => '1.0.0',
-        'css' => ['base' => ['http://example.com/example.css' => []]],
-        'js' => ['http://example.com/example.js' => []],
-        'dependencies' => [],
-      ]];
-      $this->assertEquals($expected, $library->getAttachableAssetLibraries());
-    }
-    catch (LibraryClassNotFoundException $exception) {
-      $this->fail();
-    }
-    catch (LibraryDefinitionNotFoundException $exception) {
-      $this->fail();
-    }
+  /**
+   * Tests that attachable asset library info is correctly gathered.
+   */
+  public function testAttachableAssetInfo() {
+    /** @var \Drupal\libraries\ExternalLibrary\Asset\AssetLibrary $library */
+    $library = $this->getLibrary();
+    $expected = ['test_asset_library' => [
+      'version' => '1.0.0',
+      'css' => ['base' => ['http://example.com/example.css' => []]],
+      'js' => ['http://example.com/example.js' => []],
+      'dependencies' => [],
+    ]];
+    $this->assertEquals($expected, $library->getAttachableAssetLibraries());
   }
 
   /**
@@ -77,7 +69,7 @@ class AssetLibraryTest extends LibraryKernelTestBase {
    * @see \Drupal\libraries\ExternalLibrary\Registry\ExternalLibraryRegistry
    */
   public function testAssetLibraryRemote() {
-    $library = $this->libraryDiscovery->getLibraryByName('libraries', 'test_asset_library');
+    $library = $this->coreLibraryDiscovery->getLibraryByName('libraries', 'test_asset_library');
     $expected = [
       'version' => '1.0.0',
       'css' => [[
@@ -112,8 +104,8 @@ class AssetLibraryTest extends LibraryKernelTestBase {
       $this->container->get('string_translation'),
       'assets/vendor'
     ));
-    $this->libraryDiscovery->clearCachedDefinitions();
-    $library = $this->libraryDiscovery->getLibraryByName('libraries', 'test_asset_library');
+    $this->coreLibraryDiscovery->clearCachedDefinitions();
+    $library = $this->coreLibraryDiscovery->getLibraryByName('libraries', 'test_asset_library');
     $expected = [
       'version' => '1.0.0',
       'css' => [[

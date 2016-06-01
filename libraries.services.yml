@@ -2,15 +2,15 @@ services:
   libraries.manager:
     class: Drupal\libraries\ExternalLibrary\LibraryManager
     arguments:
-      - '@libraries.registry'
+      - '@libraries.definitions.discovery'
+      - '@plugin.manager.libraries.library_type'
       - '@libraries.extension_handler'
-      - '@libraries.php_file_loader'
-  libraries.registry:
-    class: Drupal\libraries\ExternalLibrary\Registry\LibraryRegistry
-    arguments: ['@serialization.yaml', '@plugin.manager.libraries.library_type']
+  libraries.definitions.discovery:
+    class: Drupal\libraries\ExternalLibrary\Definition\StreamDefinitionDiscovery
+    arguments: ['@serialization.yaml']
 
   plugin.manager.libraries.library_type:
-    class: Drupal\libraries\ExternalLibrary\LibraryType\LibraryTypeManager
+    class: Drupal\libraries\ExternalLibrary\LibraryType\LibraryTypeFactory
     parent: default_plugin_manager
   plugin.manager.libraries.locator:
     class: Drupal\libraries\ExternalLibrary\Local\LocatorManager

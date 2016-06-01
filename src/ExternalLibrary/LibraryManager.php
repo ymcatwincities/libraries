@@ -6,10 +6,12 @@
  */
 
 namespace Drupal\libraries\ExternalLibrary;
+use Drupal\Component\Plugin\Factory\FactoryInterface;
 use Drupal\libraries\Extension\ExtensionHandlerInterface;
+use Drupal\libraries\ExternalLibrary\Exception\LibraryTypeNotFoundException;
+use Drupal\libraries\ExternalLibrary\LibraryType\LibraryCreationListenerInterface;
 use Drupal\libraries\ExternalLibrary\LibraryType\LibraryLoadingListenerInterface;
-use Drupal\libraries\ExternalLibrary\PhpFile\PhpFileLoaderInterface;
-use Drupal\libraries\ExternalLibrary\Registry\LibraryRegistryInterface;
+use Drupal\libraries\ExternalLibrary\Definition\DefinitionDiscoveryInterface;
 
 /**
  * Provides a manager for external libraries.
@@ -17,11 +19,18 @@ use Drupal\libraries\ExternalLibrary\Registry\LibraryRegistryInterface;
 class LibraryManager implements LibraryManagerInterface {
 
   /**
-   * The library registry.
+   * The library definition discovery.
    *
-   * @var \Drupal\libraries\ExternalLibrary\Registry\LibraryRegistryInterface
+   * @var \Drupal\libraries\ExternalLibrary\Definition\DefinitionDiscoveryInterface
    */
-  protected $registry;
+  protected $definitionDiscovery;
+
+  /**
+   * The library type factory.
+   *
+   * @var \Drupal\Component\Plugin\Factory\FactoryInterface
+   */
+  protected $libraryTypeFactory;
 
   /**
    * The extension handler.
@@ -33,48 +42,88 @@ class LibraryManager implements LibraryManagerInterface {
   /**
    * Constructs an external library manager.
    *
-   * @param \Drupal\libraries\ExternalLibrary\Registry\LibraryRegistryInterface $registry
+   * @param \Drupal\libraries\ExternalLibrary\Definition\DefinitionDiscoveryInterface $definition_disovery
    *   The library registry.
+   * @param \Drupal\Component\Plugin\Factory\FactoryInterface $library_type_factory
+   *   The library type factory.
    * @param \Drupal\libraries\Extension\ExtensionHandlerInterface $extension_handler
    *   The extension handler.
-   * @param \Drupal\libraries\ExternalLibrary\PhpFile\PhpFileLoaderInterface $php_file_loader
-   *   The PHP file loader.
    */
   public function __construct(
-    LibraryRegistryInterface $registry,
-    ExtensionHandlerInterface $extension_handler,
-    PhpFileLoaderInterface $php_file_loader
+    DefinitionDiscoveryInterface $definition_disovery,
+    FactoryInterface $library_type_factory,
+    ExtensionHandlerInterface $extension_handler
   ) {
-    $this->registry = $registry;
+    $this->definitionDiscovery = $definition_disovery;
+    $this->libraryTypeFactory = $library_type_factory;
     $this->extensionHandler = $extension_handler;
-    $this->phpFileLoader = $php_file_loader;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getRequiredLibraries() {
-    $libraries = [];
+  public function getLibrary($id) {
+    $definition = $this->definitionDiscovery->getDefinition($id);
+    return $this->getLibraryFromDefinition($id, $definition);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getRequiredLibraryIds() {
+    $library_ids = [];
     foreach ($this->extensionHandler->getExtensions() as $extension) {
       foreach ($extension->getLibraryDependencies() as $library_id) {
-        // Do not bother instantiating a library multiple times.
-        if (!isset($libraries[$library_id])) {
-          $libraries[$library_id] = $this->registry->getLibrary($library_id);
-        }
+        $library_ids[] = $library_id;
       }
     }
-    return $libraries;
+    return array_unique($library_ids);
   }
 
   /**
    * {@inheritdoc}
    */
   public function load($id) {
-    $library_type = $this->registry->getLibraryType($id);
+    $definition = $this->definitionDiscovery->getDefinition($id);
+    $library_type = $this->getLibraryType($id, $definition);
     // @todo Throw an exception instead of silently failing.
     if ($library_type instanceof LibraryLoadingListenerInterface) {
-      $library_type->onLibraryLoad($this->registry->getLibrary($id));
-   }
+      $library_type->onLibraryLoad($this->getLibraryFromDefinition($id, $definition));
+    }
+  }
+
+  /**
+   * @param $id
+   * @param $definition
+   * @return mixed
+   */
+  protected function getLibraryFromDefinition($id, $definition) {
+    $library_type = $this->getLibraryType($id, $definition);
+
+    // @todo Make this alter-able.
+    $class = $library_type->getLibraryClass();
+
+    // @todo Make sure that the library class implements the correct interface.
+    $library = $class::create($id, $definition);
+
+    if ($library_type instanceof LibraryCreationListenerInterface) {
+      $library_type->onLibraryCreate($library);
+      return $library;
+    }
+    return $library;
+  }
+
+  /**
+   * @param $id
+   * @param $definition
+   * @return object
+   */
+  protected function getLibraryType($id, $definition) {
+    // @todo Validate that the type is a string.
+    if (!isset($definition['type'])) {
+      throw new LibraryTypeNotFoundException($id);
+    }
+    return $this->libraryTypeFactory->createInstance($definition['type']);
   }
 
 }

@@ -17,8 +17,9 @@ function libraries_library_info_build() {
   $library_manager = \Drupal::service('libraries.manager');
 
   $core_libraries = [];
-  foreach ($library_manager->getRequiredLibraries() as $external_library) {
-    // @todo Consider using a library type listener instead.
+  foreach ($library_manager->getRequiredLibraryIds() as $external_library_id) {
+    $external_library = $library_manager->getLibrary($external_library_id);
+    // @todo Use a library type listener instead.
     if ($external_library instanceof AssetLibraryInterface) {
       $core_libraries += $external_library->getAttachableAssetLibraries();
     }

@@ -1,12 +1,8 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\libraries\ExternalLibrary\LibraryType\LibraryTypeManager.
- */
-
 namespace Drupal\libraries\ExternalLibrary\LibraryType;
 
+use Drupal\Component\Plugin\Factory\FactoryInterface;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
@@ -15,7 +11,7 @@ use Drupal\libraries\Annotation\LibraryType;
 /**
  * Provides a plugin manager for library type plugins.
  */
-class LibraryTypeManager extends DefaultPluginManager implements LibraryTypeManagerInterface {
+class LibraryTypeFactory extends DefaultPluginManager {
 
   /**
    * Constructs a locator manager.
@@ -34,14 +30,5 @@ class LibraryTypeManager extends DefaultPluginManager implements LibraryTypeMana
     $this->alterInfo('libraries_library_type_info');
     $this->setCacheBackend($cache_backend, 'libraries_library_type_info');
   }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getLibraryClass(LibraryTypeInterface $library_type) {
-    // @todo Make this alter-able.
-    return $library_type->getLibraryClass();
-  }
-
 
 }

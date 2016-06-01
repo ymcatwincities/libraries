@@ -14,11 +14,15 @@
  * Drupal request-response process in a generic way.
  *
  * @section sec_definitions Library definitions
- * In order to do be useful to other modules Libraries API needs a list of
- * known libraries and metadata about each of the libraries. Because multiple
- * modules or themes may integrate with the same external library a key
- * objective of Libraries API is to keep this information separate from any one
- * module or theme.
+ * In order to be useful to other modules Libraries API needs a list of known
+ * libraries and metadata about each of the libraries. Because multiple modules
+ * themes may integrate with the same external library a key objective of
+ * Libraries API is to keep this information separate from any one module or
+ * theme.
+ *
+ * Definitions are accessed via a discovery that is responsible for checking
+ * whether a given definition exists and fetching it, if it is. See
+ * LibraryRegistryInterface and StreamDefinitionDiscovery for more information.
  *
  * @subsection sub_definitions_machine_name
  * A central part of a library's metadata is the library's machine name or ID.
@@ -35,37 +39,11 @@
  * race conditions between modules providing information for the same library.
  * Thus, in Drupal 8 there is no longer a hook making it necessary to properly
  * solve the problem of centrally maintaining and distributing library info
- * files. This has yet to be done.
+ * files. This has yet to be done. See https://www.drupal.org/node/773508 for
+ * more information.
  *
- * @subsection sub_definitions_stream_wrapper
- * In anticipation of a central repository of library information that will
- * distribute library definitions as separate files Libraries API provides a
- * 'library-definitions' stream wrapper. Due to that a library's definition can
- * be accessed given only it's machine name, for example at
- * 'library-definitions://example.yml' for a library with the machine name
- * 'example'. YAML is chosen as the file format because it is used in many parts
- * of Drupal 8 already. Using a stream wrapper has the benefit of being able to
- * swap out the specific storage implementation without any other part of the
- * code needing to change. For example, the specific directory which holds the
- * library definitions on disk can be changed, multiple directories can be
- * layered as though they were one, or the library definitions can even be
- * read from a remote location without any part of the code other than the
- * stream wrapper implementation itself needing to change.
- *
- * By default the library definitions stream wrapper reads from a single
- * directory that is configurable and points to the 'library-definitions'
- * directory within the public files directory by default. This makes library
- * definitions writable by the webserver by default, which is in anticipation of
- * a user interface that fetches definitions from a remote repository and stores
- * them locally. For improved security the library definitions can be managed
- * manually (or put under version control) and placed in a directory that is not
- * writable by the webserver. The idea of using a stream wrapper for this as
- * well as the default location is taken from the 'translations' stream wrapper
- * provided by the Interface Translation module.
- *
- * @see \Drupal\libraries\ExternalLibrary\Registry\LibraryRegistryInterface
- * @see \Drupal\libraries\ExternalLibrary\Registry\LibraryRegistry
- * @see \Drupal\libraries\StreamWrapper\LibraryDefinitionsStream
+ * @see \Drupal\libraries\ExternalLibrary\Definition\DefinitionDiscoveryInterface
+ * @see \Drupal\libraries\ExternalLibrary\Definition\StreamDefinitionDiscovery
  *
  * @}
  */

@@ -106,10 +106,10 @@ class PhpFileLibraryType implements
    */
   public function onLibraryLoad(LibraryInterface $library) {
     /** @var \Drupal\libraries\ExternalLibrary\PhpFile\PhpFileLibraryInterface $library */
+    // @todo Prevent loading a library multiple times.
     foreach ($library->getPhpFiles() as $file) {
       $this->phpFileLoader->load($file);
     }
-
   }
 
 }
