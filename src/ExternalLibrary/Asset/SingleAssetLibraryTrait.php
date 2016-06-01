@@ -8,6 +8,7 @@
 namespace Drupal\libraries\ExternalLibrary\Asset;
 
 use Drupal\libraries\ExternalLibrary\Exception\InvalidLibraryDependencyException;
+use Drupal\libraries\ExternalLibrary\LibraryManagerInterface;
 
 /**
  * Provides a trait for external libraries that contain a single asset library.
@@ -24,22 +25,28 @@ trait SingleAssetLibraryTrait {
   /**
    * Returns a core library array structure for this library.
    *
+   * @param \Drupal\libraries\ExternalLibrary\LibraryManagerInterface $library_manager
+   *   The library manager that can be used to fetch dependencies.
+   *
    * @return array
    *
    * @see \Drupal\libraries\ExternalLibrary\Asset\getAttachableAssetLibraries::getAttachableAssetLibraries()
    *
    * @throws \Drupal\libraries\ExternalLibrary\Exception\InvalidLibraryDependencyException
+   * @throws \Drupal\libraries\ExternalLibrary\Exception\LibraryDefinitionNotFoundException
+   * @throws \Drupal\libraries\ExternalLibrary\Exception\LibraryTypeNotFoundException
+   * @throws \Drupal\Component\Plugin\Exception\PluginException
    *
    * @todo Document the return value.
    */
-  public function getAttachableAssetLibraries() {
+  public function getAttachableAssetLibraries(LibraryManagerInterface $library_manager) {
     $libraries = [];
     if ($this->canBeAttached()) {
       $libraries[$this->getId()] = [
         'version' => $this->getVersion(),
         'css' => $this->getCssAssets(),
         'js' => $this->getJsAssets(),
-        'dependencies' => $this->processDependencies($this->getDependencies()),
+        'dependencies' => $this->processDependencies($library_manager, $this->getDependencies()),
       ];
     }
     return $libraries;
@@ -48,24 +55,31 @@ trait SingleAssetLibraryTrait {
   /**
    * Processes a list of dependencies into a list of attachable library IDs.
    *
-   * @param \Drupal\libraries\ExternalLibrary\LibraryInterface[] $dependencies
+   * @param \Drupal\libraries\ExternalLibrary\LibraryManagerInterface $library_manager
+   *   The library manager that can be used to fetch dependencies.
+   * @param \Drupal\libraries\ExternalLibrary\LibraryInterface[] $dependency_ids
    *   An list of external libraries.
    *
    * @return string[]
    *   A list of attachable asset library IDs.
    *
    * @throws \Drupal\libraries\ExternalLibrary\Exception\InvalidLibraryDependencyException
+   * @throws \Drupal\libraries\ExternalLibrary\Exception\LibraryDefinitionNotFoundException
+   * @throws \Drupal\libraries\ExternalLibrary\Exception\LibraryTypeNotFoundException
+   * @throws \Drupal\Component\Plugin\Exception\PluginException
    */
-  protected function processDependencies(array $dependencies) {
+  protected function processDependencies(LibraryManagerInterface $library_manager, array $dependency_ids) {
     $attachable_dependency_ids = [];
-    foreach ($dependencies as $dependency) {
+    foreach ($dependency_ids as $dependency_id) {
+      $dependency = $library_manager->getLibrary($dependency_id);
       if (!$dependency instanceof AssetLibraryInterface) {
         // @todo Somehow integrate this with canBeAttached().
         /** @var \Drupal\libraries\ExternalLibrary\LibraryInterface $this */
         throw new InvalidLibraryDependencyException($this, $dependency);
       }
 
-      foreach (array_keys($dependency->getAttachableAssetLibraries()) as $attachable_dependency_id) {
+      $attachable_dependency_ids = array_keys($dependency->getAttachableAssetLibraries($library_manager));
+      foreach ($attachable_dependency_ids as $attachable_dependency_id) {
         // @todo It is not very elegant to hard-code the namespace here.
         $attachable_dependency_ids[] = 'libraries/' . $attachable_dependency_id;
       }

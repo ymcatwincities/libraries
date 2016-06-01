@@ -8,16 +8,16 @@
 namespace Drupal\libraries\ExternalLibrary\PhpFile;
 
 use Drupal\Component\Plugin\Factory\FactoryInterface;
+use Drupal\libraries\ExternalLibrary\Dependency\DependentLibraryTrait;
 use Drupal\libraries\ExternalLibrary\Exception\LibraryNotInstalledException;
-use Drupal\libraries\ExternalLibrary\LibraryTrait;
+use Drupal\libraries\ExternalLibrary\LibraryBase;
 use Drupal\libraries\ExternalLibrary\Local\LocalLibraryTrait;
 
 /**
  * Provides a base PHP file library implementation.
  */
-class PhpFileLibrary implements PhpFileLibraryInterface {
+class PhpFileLibrary extends LibraryBase implements PhpFileLibraryInterface {
 
-  use LibraryTrait;
   use LocalLibraryTrait;
 
   /**
@@ -32,34 +32,21 @@ class PhpFileLibrary implements PhpFileLibraryInterface {
    *
    * @param string $id
    *   The library ID.
-   * @param array $files
-   *   An array of PHP files for this library.
-   */
-  public function __construct($id, array $files) {
-    $this->id = (string) $id;
-    $this->files = $files;
-  }
-
-  /**
-   * Creates an instance of the library from its definition.
-   *
-   * @param string $id
-   *   The library ID.
    * @param array $definition
-   *   The library definition array parsed from the definition JSON file.
-   *
-   * @return static
+   *   The library definition array.
    */
-  public static function create($id, array $definition) {
-    $definition += ['files' => []];
-    return new static($id, $definition['files']);
+  public function __construct($id, array $definition) {
+    parent::__construct($id, $definition);
+    $this->files = $definition['files'];
   }
 
   /**
    * {@inheritdoc}
    */
-  protected function getScheme() {
-    return 'php-file';
+  protected static function definitionDefaults() {
+    return parent::definitionDefaults() + [
+      'files' => [],
+    ];
   }
 
   /**

@@ -42,8 +42,15 @@
  * files. This has yet to be done. See https://www.drupal.org/node/773508 for
  * more information.
  *
+ * @section sec_definitions Library types
+ * Libraries are classed objects that implement LibraryInterface. This generic
+ * interface only dictates that a library is aware of its ID. Any further
+ * functionality depends on the type of library, each type of library comes with
+ * a dedicated interface.
+ *
  * @see \Drupal\libraries\ExternalLibrary\Definition\DefinitionDiscoveryInterface
  * @see \Drupal\libraries\ExternalLibrary\Definition\StreamDefinitionDiscovery
+ * @see \Drupal\libraries\ExternalLibrary\LibraryInterface
  *
  * @}
  */

@@ -21,7 +21,7 @@ function libraries_library_info_build() {
     $external_library = $library_manager->getLibrary($external_library_id);
     // @todo Use a library type listener instead.
     if ($external_library instanceof AssetLibraryInterface) {
-      $core_libraries += $external_library->getAttachableAssetLibraries();
+      $core_libraries += $external_library->getAttachableAssetLibraries($library_manager);
     }
   }
   return $core_libraries;

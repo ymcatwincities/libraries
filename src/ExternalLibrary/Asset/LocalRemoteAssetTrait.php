@@ -7,8 +7,6 @@
 
 namespace Drupal\libraries\ExternalLibrary\Asset;
 
-use Drupal\Component\Plugin\Factory\FactoryInterface;
-
 /**
  * A trait for asset libraries that serve local and remote files.
  *
@@ -38,19 +36,6 @@ trait LocalRemoteAssetTrait {
    * @var array
    */
   protected $jsAssets;
-
-  /**
-   * Gets the locator of this library using the locator factory.
-   *
-   * @param \Drupal\Component\Plugin\Factory\FactoryInterface $locator_factory
-   *
-   * @return \Drupal\libraries\ExternalLibrary\Local\LocatorInterface
-   *
-   * @see \Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface::getLocator()
-   */
-  public function getLocator(FactoryInterface $locator_factory) {
-    return $locator_factory->createInstance('stream', ['scheme' => 'asset']);
-  }
 
   /**
    * Checks whether this library can be attached.

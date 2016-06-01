@@ -2,8 +2,6 @@
 
 namespace Drupal\Tests\libraries\Kernel\ExternalLibrary\PhpFile;
 
-use Drupal\libraries\ExternalLibrary\Exception\LibraryDefinitionNotFoundException;
-use Drupal\libraries\ExternalLibrary\PhpFile\PhpFileLibrary;
 use Drupal\Tests\libraries\Kernel\ExternalLibrary\TestLibraryFilesStream;
 use Drupal\Tests\libraries\Kernel\LibraryTypeKernelTestBase;
 
@@ -12,7 +10,7 @@ use Drupal\Tests\libraries\Kernel\LibraryTypeKernelTestBase;
  *
  * @group libraries
  */
-class PhpFileLibraryTypeTest extends LibraryTypeKernelTestBase {
+class PhpFileLibraryTest extends LibraryTypeKernelTestBase {
 
   /**
    * {@inheritdoc}

@@ -24,20 +24,12 @@ interface LibraryInterface {
   public function getId();
 
   /**
-   * Returns the libraries dependencies, if any.
-   *
-   * @return array
-   *   An array of library IDs of libraries that the library depends on.
-   */
-  public function getDependencies();
-
-  /**
    * Creates an instance of the library from its definition.
    *
    * @param string $id
    *   The library ID.
    * @param array $definition
-   *   The library definition array parsed from the definition JSON file.
+   *   The library definition array.
    *
    * @return static
    *

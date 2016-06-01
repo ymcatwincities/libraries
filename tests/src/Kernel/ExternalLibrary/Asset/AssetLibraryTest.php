@@ -10,7 +10,7 @@ use Drupal\Tests\libraries\Kernel\LibraryTypeKernelTestBase;
  *
  * @group libraries
  */
-class AssetLibraryTypeTest extends LibraryTypeKernelTestBase {
+class AssetLibraryTest extends LibraryTypeKernelTestBase {
 
   /**
    * {@inheritdoc}
@@ -54,7 +54,7 @@ class AssetLibraryTypeTest extends LibraryTypeKernelTestBase {
       'js' => ['http://example.com/example.js' => []],
       'dependencies' => [],
     ]];
-    $this->assertEquals($expected, $library->getAttachableAssetLibraries());
+    $this->assertEquals($expected, $library->getAttachableAssetLibraries($this->libraryManager));
   }
 
   /**
