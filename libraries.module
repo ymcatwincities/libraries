@@ -8,6 +8,7 @@
 use Drupal\Core\DrupalKernel;
 use Drupal\Core\Extension\ModuleHandler;
 use Drupal\libraries\ExternalLibrary\Asset\AssetLibraryInterface;
+use Symfony\Component\Yaml\Parser;
 
 /**
  * Implements hook_library_info_build().
@@ -400,7 +401,7 @@ function &libraries_info($name = NULL) {
     // directly.
     // @todo Consider creating a dedicating InfoParser for library info files
     //   similar to \Drupal\Core\Extension\InfoParser
-    $parser = new \Symfony\Component\Yaml\Parser();
+    $parser = new Parser();
     foreach (libraries_scan_info_files() as $machine_name => $file) {
       $properties = $parser->parse(file_get_contents($file->uri));
       $properties['info file'] = $file->uri;

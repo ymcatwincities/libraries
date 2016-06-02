@@ -9,14 +9,12 @@ namespace Drupal\libraries\ExternalLibrary\Asset;
 
 use Drupal\Component\Plugin\Factory\FactoryInterface;
 use Drupal\libraries\ExternalLibrary\Dependency\DependentLibraryInterface;
-use Drupal\libraries\ExternalLibrary\Dependency\DependentLibraryTrait;
 use Drupal\libraries\ExternalLibrary\LibraryBase;
 use Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface;
 use Drupal\libraries\ExternalLibrary\Local\LocalLibraryTrait;
 use Drupal\libraries\ExternalLibrary\Remote\RemoteLibraryInterface;
 use Drupal\libraries\ExternalLibrary\Remote\RemoteLibraryTrait;
 use Drupal\libraries\ExternalLibrary\Version\VersionedLibraryInterface;
-use Drupal\libraries\ExternalLibrary\Version\VersionedLibraryTrait;
 
 /**
  * Provides a base asset library implementation.

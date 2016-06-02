@@ -1,7 +1,7 @@
 <?php
 
 namespace Drupal\Tests\libraries\Unit\Plugin\libraries\VersionDetector;
-use Drupal\libraries\ExternalLibrary\Exception\UnknownLibraryVersionException;
+
 use Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface;
 use Drupal\libraries\ExternalLibrary\Version\VersionedLibraryInterface;
 use Drupal\libraries\Plugin\libraries\VersionDetector\LinePatternDetector;

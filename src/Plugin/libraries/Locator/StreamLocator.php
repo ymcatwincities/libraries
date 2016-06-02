@@ -7,7 +7,6 @@
 
 namespace Drupal\libraries\Plugin\libraries\Locator;
 
-use Drupal\Component\Plugin\Exception\PluginException;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface;
@@ -77,7 +76,6 @@ class StreamLocator implements LocatorInterface, ContainerFactoryPluginInterface
     }
     return new static($container->get('file_system'), $container->get('app.root'), $configuration['scheme']);
   }
-
 
   /**
    * Locates a library.

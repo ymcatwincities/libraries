@@ -6,7 +6,6 @@ use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
 use Drupal\libraries\Annotation\VersionDetector;
-use Drupal\libraries\ExternalLibrary\Version\VersionDetectorInterface;
 
 /**
  * Provides a plugin manager for library version detector plugins.

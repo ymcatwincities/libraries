@@ -8,7 +8,6 @@
 namespace Drupal\libraries\ExternalLibrary\Exception;
 
 use Drupal\libraries\ExternalLibrary\Utility\LibraryIdAccessorTrait;
-use Exception;
 
 /**
  * Provides an exception for a library definition that cannot be found.

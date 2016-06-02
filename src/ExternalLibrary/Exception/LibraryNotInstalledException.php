@@ -9,7 +9,6 @@ namespace Drupal\libraries\ExternalLibrary\Exception;
 
 use Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface;
 use Drupal\libraries\ExternalLibrary\Utility\LibraryAccessorTrait;
-use Exception;
 
 /**
  * Provides an exception for a library that is not installed.

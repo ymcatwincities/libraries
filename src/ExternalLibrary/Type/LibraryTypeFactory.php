@@ -2,7 +2,6 @@
 
 namespace Drupal\libraries\ExternalLibrary\Type;
 
-use Drupal\Component\Plugin\Factory\FactoryInterface;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;

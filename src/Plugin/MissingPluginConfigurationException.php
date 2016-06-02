@@ -6,9 +6,8 @@
  */
 
 namespace Drupal\libraries\Plugin;
-use Drupal\Component\Plugin\Exception\PluginException;
-use Exception;
 
+use Drupal\Component\Plugin\Exception\PluginException;
 
 /**
  * Provides an exception class for missing plugin configuration.
@@ -52,7 +51,6 @@ class MissingPluginConfigurationException extends PluginException {
     $message = $message ?: "The '{$missing_key}' key is missing in the configuration of the '{$plugin_id}' plugin.";
     parent::__construct($message, $code, $previous);
   }
-
 
 }
 

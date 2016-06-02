@@ -8,7 +8,6 @@
 namespace Drupal\libraries\ExternalLibrary\PhpFile;
 
 use Drupal\Component\Plugin\Factory\FactoryInterface;
-use Drupal\libraries\ExternalLibrary\Dependency\DependentLibraryTrait;
 use Drupal\libraries\ExternalLibrary\Exception\LibraryNotInstalledException;
 use Drupal\libraries\ExternalLibrary\LibraryBase;
 use Drupal\libraries\ExternalLibrary\Local\LocalLibraryTrait;
