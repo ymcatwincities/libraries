@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\libraries\ExternalLibrary\Asset\AssetLibraryTrait.
- */
-
 namespace Drupal\libraries\ExternalLibrary\Asset;
 
 use Drupal\libraries\ExternalLibrary\Exception\InvalidLibraryDependencyException;

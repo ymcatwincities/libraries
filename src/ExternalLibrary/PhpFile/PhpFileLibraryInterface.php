@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\libraries\ExternalLibrary\PhpFile\PhpFileLibraryInterface.
- */
-
 namespace Drupal\libraries\ExternalLibrary\PhpFile;
 
 use Drupal\libraries\ExternalLibrary\Local\LocalLibraryInterface;

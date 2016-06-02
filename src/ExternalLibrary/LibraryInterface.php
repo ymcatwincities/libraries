@@ -1,12 +1,6 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\libraries\ExternalLibrary\LibraryInterface.
- */
-
 namespace Drupal\libraries\ExternalLibrary;
-
 
 /**
  * Provides an interface for different types of external libraries.

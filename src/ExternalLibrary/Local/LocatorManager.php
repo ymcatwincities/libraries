@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\libraries\ExternalLibrary\Local\LocatorManager.
- */
-
 namespace Drupal\libraries\ExternalLibrary\Local;
 
 use Drupal\Core\Cache\CacheBackendInterface;

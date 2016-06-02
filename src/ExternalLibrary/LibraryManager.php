@@ -1,11 +1,7 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\libraries\ExternalLibrary\LibraryManager.
- */
-
 namespace Drupal\libraries\ExternalLibrary;
+
 use Drupal\Component\Plugin\Factory\FactoryInterface;
 use Drupal\libraries\Extension\ExtensionHandlerInterface;
 use Drupal\libraries\ExternalLibrary\Exception\LibraryTypeNotFoundException;

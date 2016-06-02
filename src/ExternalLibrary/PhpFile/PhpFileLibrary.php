@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\libraries\ExternalLibrary\PhpFile\PhpFileLibrary.
- */
-
 namespace Drupal\libraries\ExternalLibrary\PhpFile;
 
 use Drupal\Component\Plugin\Factory\FactoryInterface;

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\libraries\ExternalLibrary\Asset\AssetLibrary.
- */
-
 namespace Drupal\libraries\ExternalLibrary\Asset;
 
 use Drupal\Component\Plugin\Factory\FactoryInterface;

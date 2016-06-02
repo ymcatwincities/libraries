@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\libraries\ExternalLibrary\Asset\LocalRemoteAssetTrait.
- */
-
 namespace Drupal\libraries\ExternalLibrary\Asset;
 
 /**
@@ -123,4 +118,3 @@ trait LocalRemoteAssetTrait {
   }
 
 }
-

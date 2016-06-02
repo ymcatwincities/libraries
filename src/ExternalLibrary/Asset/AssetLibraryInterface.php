@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\libraries\ExternalLibrary\Asset\AssetLibraryInterface.
- */
-
 namespace Drupal\libraries\ExternalLibrary\Asset;
 
 use Drupal\libraries\ExternalLibrary\LibraryInterface;

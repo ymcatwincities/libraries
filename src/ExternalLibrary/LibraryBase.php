@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\libraries\ExternalLibrary\LibraryTrait.
- */
-
 namespace Drupal\libraries\ExternalLibrary;
 
 use Drupal\libraries\ExternalLibrary\Dependency\DependentLibraryInterface;
