@@ -56,6 +56,52 @@
  */
 
 /**
+ * Alter library type information.
+ *
+ * @param array $library_types
+ *   An array of library types keyed by ID. Each library type is an array with
+ *   the following keys:
+ *   - id: The ID of the library type.
+ *   - class: The class to use for this library type.
+ *   - provider: The provider of this library type.
+ */
+function hook_libraries_library_type_info_alter(array &$library_types) {
+  // Use a different class for the asset library type. Note that this class is
+  // distinct from the class actually for asset libraries themselves.
+  $library_types['asset']['class'] = 'Drupal\mymodule\ExternalLibrary\BetterAssetLibraryType';
+}
+
+/**
+ * Alter library locator information.
+ *
+ * @param array $locators
+ *   An array of library locators keyed by ID. Each locator is an array with the
+ *   following keys:
+ *   - id: The ID of the library locator.
+ *   - class: The class to use for this library locator.
+ *   - provider: The provider of this library locator.
+ */
+function hook_libraries_locator_info_alter(array &$locators) {
+  // Use a different class for the stream locator.
+  $locators['stream']['class'] = 'Drupal\mymodule\ExternalLibrary\BetterStreamLocator';
+}
+
+/**
+ * Alter library version detector information.
+ *
+ * @param array $version_detectors
+ *   An array of library version detectors keyed by ID. Each detector is an
+ *   array with the following keys:
+ *   - id: The ID of the library version detector.
+ *   - class: The class to use for this library version detector.
+ *   - provider: The provider of this library version detector.
+ */
+function hook_libraries_version_detector_info_alter(array &$version_detectors) {
+  // Use a different class for the line pattern locator.
+  $version_detectors['line_pattern']['class'] = 'Drupal\mymodule\ExternalLibrary\BetterLinePatternDetector';
+}
+
+/**
  * Return information about external libraries.
  *
  * @return
