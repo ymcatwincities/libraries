@@ -7,3 +7,4 @@ dependencies:
 hidden: TRUE
 library_dependencies:
   - test_asset_library
+  - test_asset_multiple_library
