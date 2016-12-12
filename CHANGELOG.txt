@@ -1,6 +1,7 @@
 
 Libraries 8.x-3.x, xxxx-xx-xx
 -----------------------------
+#2833756 by 20th: Check that public://library-definitions directory does not exist
 #2825940 by tstoeckler, rjacobs: Remove LibrariesServiceProvider
 #2816115 by rjacobs: Remove ExtensionHandler service
 #2770983 by rjacobs: Update services.yml to reference new registry URL of http://cgit.drupalcode.org/libraries_registry/plain/registry/8
