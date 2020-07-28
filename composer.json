@@ -1,5 +1,5 @@
 {
-  "name": "drupal/libraries",
+  "name": "ymcatwincities/libraries",
   "description": "Allows version-dependent and shared usage of external libraries in Drupal.",
   "type": "drupal-module",
   "homepage": "http://drupal.org/project/libraries",
