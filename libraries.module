@@ -117,7 +117,7 @@ function libraries_get_libraries() {
   // profile, installation profiles may want to place libraries into a
   // 'libraries' directory.
   if ($profile = \Drupal::installProfile()) {
-    $profile_path = \Drupal\Core\Extension\ExtensionList::getPath('profile', $profile);
+    $profile_path = drupal_get_path('profile', $profile);
     $searchdir[] = "$profile_path/libraries";
   };
 
